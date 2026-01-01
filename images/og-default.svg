@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="ogBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0891b2"/>
+      <stop offset="100%" style="stop-color:#0e7490"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogBgGrad)"/>
+  <path d="M600 150L630 240H720L645 300L675 390L600 330L525 390L555 300L480 240H570L600 150Z" fill="white" opacity="0.9"/>
+  <text x="600" y="480" font-family="Inter, sans-serif" font-size="64" font-weight="700" fill="white" text-anchor="middle">CrossConnect MY</text>
+  <text x="600" y="540" font-family="Inter, sans-serif" font-size="28" fill="white" opacity="0.8" text-anchor="middle">Find Churches Across Malaysia</text>
+</svg>

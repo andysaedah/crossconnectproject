@@ -1,0 +1,233 @@
+# MyChurchFind MY - Apache Configuration
+# Portable, secure, and SEO-friendly configuration
+# Works in both root and subdirectory installations
+
+# ============================================
+# REWRITE ENGINE
+# ============================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Set the base - automatically detect or use root
+    # For subdirectory installations, you may need to set this manually
+    # e.g., RewriteBase /hebats/
+    RewriteBase /hebats/
+    
+    # Force HTTPS (uncomment in production)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Remove www (optional - uncomment if needed)
+    # RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    # RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+    
+    # Remove trailing slashes (except for actual directories)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [R=301,L]
+    
+    # SEO-friendly URLs for churches
+    # /church/church-slug -> church.php?slug=church-slug
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^church/([a-zA-Z0-9_-]+)/?$ church.php?slug=$1 [L,QSA]
+    
+    # SEO-friendly URLs for states
+    # /state/state-slug -> state.php?s=state-slug
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^state/([a-zA-Z0-9_-]+)/?$ state.php?s=$1 [L,QSA]
+    
+    # SEO-friendly URLs for events
+    # /events/event-slug -> event.php?slug=event-slug
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^events/([a-zA-Z0-9_-]+)/?$ event.php?slug=$1 [L,QSA]
+</IfModule>
+
+# ============================================
+# SECURITY HEADERS
+# ============================================
+<IfModule mod_headers.c>
+    # Prevent MIME-type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Prevent clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # XSS Protection (legacy browsers)
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Permissions Policy (modern replacement for Feature-Policy)
+    Header set Permissions-Policy "geolocation=(self), microphone=(), camera=()"
+    
+    # Remove PHP version exposure
+    Header unset X-Powered-By
+    
+    # Content Security Policy (allows inline scripts for this app)
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com cdnjs.cloudflare.com; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self'"
+</IfModule>
+
+# ============================================
+# FILE ACCESS PROTECTION
+# ============================================
+
+# Deny access to sensitive files
+<FilesMatch "^\.">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect config directory and sensitive PHP files
+<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|in[ci]|log|orig|psd|sh|sql|sw[op])|~)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect specific configuration files
+<FilesMatch "^(database\.php|\.env|\.htaccess|\.htpasswd|composer\.(json|lock)|package\.(json|lock))$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
+
+# Prevent access to config, database, and includes folders
+<IfModule mod_alias.c>
+    RedirectMatch 403 ^/config/.*$
+    RedirectMatch 403 ^/database/.*$
+    RedirectMatch 403 ^/includes/.*$
+</IfModule>
+
+# ============================================
+# CHARACTER ENCODING
+# ============================================
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+    AddCharset UTF-8 .php .html .css .js .json .xml
+</IfModule>
+
+# ============================================
+# CACHING (Performance)
+# ============================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    
+    # HTML - short cache for dynamic content
+    ExpiresByType text/html "access plus 0 seconds"
+    
+    # CSS & JavaScript - medium cache
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    
+    # Images - long cache
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+    
+    # Fonts - long cache
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # JSON & XML - no cache (API responses)
+    ExpiresByType application/json "access plus 0 seconds"
+    ExpiresByType application/xml "access plus 0 seconds"
+</IfModule>
+
+# Cache-Control headers
+<IfModule mod_headers.c>
+    # Disable caching for PHP/dynamic content
+    <FilesMatch "\.(php|json)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
+    </FilesMatch>
+    
+    # Enable caching for static assets
+    <FilesMatch "\.(css|js|jpg|jpeg|png|gif|svg|webp|ico|woff|woff2)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
+
+# ============================================
+# COMPRESSION (Performance)
+# ============================================
+<IfModule mod_deflate.c>
+    # Compress text-based content
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/atom+xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE font/woff
+    AddOutputFilterByType DEFLATE font/woff2
+    AddOutputFilterByType DEFLATE application/font-woff
+    AddOutputFilterByType DEFLATE application/font-woff2
+    
+    # Remove browser bugs (only needed for really old browsers)
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+# ============================================
+# ERROR HANDLING
+# ============================================
+# Custom error pages (uses relative paths - works in any directory)
+# Note: These paths are relative to document root
+# For subdirectory installations, Apache will look in the correct location
+ErrorDocument 400 /index.php?error=400
+ErrorDocument 401 /index.php?error=401
+ErrorDocument 403 /index.php?error=403
+ErrorDocument 404 /index.php?error=404
+ErrorDocument 500 /index.php?error=500
+
+# ============================================
+# PHP SETTINGS (if allowed by server)
+# ============================================
+<IfModule mod_php.c>
+    # Hide PHP version
+    php_flag expose_php Off
+    
+    # Session security
+    php_value session.cookie_httponly 1
+    php_value session.cookie_secure 0
+    php_value session.use_only_cookies 1
+    
+    # Upload limits (adjust as needed)
+    php_value upload_max_filesize 10M
+    php_value post_max_size 12M
+    
+    # Error handling (disable display in production)
+    # php_flag display_errors Off
+    # php_flag log_errors On
+</IfModule>
+
+# ============================================
+# ETags (Remove for better caching consistency)
+# ============================================
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None
