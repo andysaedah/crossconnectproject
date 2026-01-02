@@ -248,7 +248,7 @@ try {
         // Send Telegram notification
         sendTelegramNotification(
             "📅 New Event Added",
-            "*{$name}*\n📍 {$venue}\n🗓️ {$startDate}" . ($user['name'] ? "\n👤 By: {$user['name']}" : ""),
+            "*{$name}*\n📍 {$venue}\n🗓️ {$eventDate}" . ($user['name'] ? "\n👤 By: {$user['name']}" : ""),
             "success"
         );
 
