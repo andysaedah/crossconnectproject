@@ -73,6 +73,69 @@ function url($path = '')
 }
 
 /**
+ * Check if clean URLs are enabled
+ * 
+ * @return bool
+ */
+function isCleanUrlsEnabled()
+{
+    static $enabled = null;
+
+    if ($enabled === null) {
+        // Check if settings are available (database.php and settings.php loaded)
+        if (function_exists('getSetting')) {
+            $enabled = getSetting('clean_urls', '0') === '1';
+        } else {
+            $enabled = false;
+        }
+    }
+
+    return $enabled;
+}
+
+/**
+ * Generate church URL (supports clean URLs when enabled)
+ * 
+ * @param string $slug Church slug
+ * @return string Church page URL
+ */
+function churchUrl($slug)
+{
+    if (isCleanUrlsEnabled()) {
+        return url('church/' . urlencode($slug));
+    }
+    return url('church.php?slug=' . urlencode($slug));
+}
+
+/**
+ * Generate event URL (supports clean URLs when enabled)
+ * 
+ * @param string $slug Event slug
+ * @return string Event page URL
+ */
+function eventUrl($slug)
+{
+    if (isCleanUrlsEnabled()) {
+        return url('events/' . urlencode($slug));
+    }
+    return url('event.php?slug=' . urlencode($slug));
+}
+
+/**
+ * Generate state URL (supports clean URLs when enabled)
+ * 
+ * @param string $slug State slug
+ * @return string State page URL
+ */
+function stateUrl($slug)
+{
+    if (isCleanUrlsEnabled()) {
+        return url('state/' . urlencode($slug));
+    }
+    return url('state.php?s=' . urlencode($slug));
+}
+
+/**
  * Generate asset URL (CSS, JS, images)
  * 
  * @param string $path Asset path relative to app root

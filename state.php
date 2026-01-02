@@ -176,7 +176,7 @@ require_once 'includes/header.php';
                     <div class="church-card-content">
                         <h3 class="church-card-name">
                             <a
-                                href="<?php echo url('church.php?slug=' . htmlspecialchars($church['slug'])); ?>"><?php echo htmlspecialchars($church['name']); ?></a>
+                                href="<?php echo churchUrl($church['slug']); ?>"><?php echo htmlspecialchars($church['name']); ?></a>
                         </h3>
                         <?php if (!empty($church['denomination_name'])): ?>
                             <div class="church-card-denomination"><?php echo htmlspecialchars($church['denomination_name']); ?>

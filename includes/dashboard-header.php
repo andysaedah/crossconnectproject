@@ -130,25 +130,39 @@ $pageTitle = $pageTitle ?? __('dashboard');
                             </a>
                         </div>
                     </div>
-                    <a href="<?php echo url('admin/language.php'); ?>"
-                        class="sidebar-link <?php echo $currentPage === 'language' ? 'active' : ''; ?>">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path
-                                d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                            </path>
-                        </svg>
-                        <span><?php _e('admin_languages'); ?></span>
-                    </a>
-                    <a href="<?php echo url('admin/api-settings.php'); ?>"
-                        class="sidebar-link <?php echo $currentPage === 'api-settings' ? 'active' : ''; ?>">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5"></path>
-                            <path d="M2 12l10 5 10-5"></path>
-                        </svg>
-                        <span><?php _e('admin_api_integration'); ?></span>
-                    </a>
+                    <!-- Settings Dropdown -->
+                    <div
+                        class="sidebar-dropdown <?php echo in_array($currentPage, ['site-config', 'language', 'api-settings']) ? 'open' : ''; ?>">
+                        <button
+                            class="sidebar-link sidebar-dropdown-toggle <?php echo in_array($currentPage, ['site-config', 'language', 'api-settings']) ? 'active' : ''; ?>"
+                            onclick="toggleDropdown(this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                </path>
+                            </svg>
+                            <span><?php _e('admin_settings'); ?></span>
+                            <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="sidebar-dropdown-menu">
+                            <a href="<?php echo url('admin/site-config.php'); ?>"
+                                class="sidebar-sublink <?php echo $currentPage === 'site-config' ? 'active' : ''; ?>">
+                                <?php _e('admin_site_config'); ?>
+                            </a>
+                            <a href="<?php echo url('admin/language.php'); ?>"
+                                class="sidebar-sublink <?php echo $currentPage === 'language' ? 'active' : ''; ?>">
+                                <?php _e('admin_languages'); ?>
+                            </a>
+                            <a href="<?php echo url('admin/api-settings.php'); ?>"
+                                class="sidebar-sublink <?php echo $currentPage === 'api-settings' ? 'active' : ''; ?>">
+                                <?php _e('admin_api_integration'); ?>
+                            </a>
+                        </div>
+                    </div>
                 <?php else: ?>
                     <!-- User Navigation -->
                     <a href="<?php echo url('dashboard/'); ?>"

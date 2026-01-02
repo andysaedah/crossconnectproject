@@ -42,6 +42,8 @@ return [
     'admin_events' => 'Acara',
     'admin_languages' => 'Bahasa',
     'admin_logs' => 'Log',
+    'admin_settings' => 'Tetapan',
+    'admin_site_config' => 'Konfigurasi Laman',
     'admin_users' => 'Pengguna',
 
     // All
@@ -620,6 +622,21 @@ Rabu: 7:30 malam (Persekutuan Doa)',
     // Site
     'site_name' => 'CrossConnect MY',
     'site_tagline' => 'Projek komuniti CoreFLAME, dibina dengan kasih untuk komuniti Kristian Malaysia. Kami komited untuk melayani gereja-gereja dan para pengguna dengan platform yang percuma, mudah diakses, dan sentiasa diperbaiki.',
+    'site_config_desc' => 'Konfigurasi tetapan umum laman dan pilihan URL',
+    'clean_urls' => 'URL Bersih (Mesra SEO)',
+    'clean_urls_desc' => 'Aktifkan URL mesra SEO untuk kedudukan enjin carian yang lebih baik dan pengalaman pengguna.',
+    'clean_urls_req_1' => 'Apache mod_rewrite mesti diaktifkan',
+    'clean_urls_req_2' => 'AllowOverride All mesti ditetapkan dalam konfigurasi Apache',
+    'force_https' => 'Paksa HTTPS',
+    'force_https_desc' => 'Ubah hala semua permintaan HTTP ke HTTPS secara automatik untuk sambungan selamat.',
+    'url_settings' => 'Tetapan URL',
+    'requirements' => 'Keperluan',
+    'enabled' => 'Diaktifkan',
+    'disabled' => 'Dinyahaktifkan',
+    'save_settings' => 'Simpan Tetapan',
+    'saving' => 'Menyimpan...',
+    'success_settings_saved' => 'Tetapan berjaya disimpan!',
+    'error_saving_settings' => 'Ralat menyimpan tetapan. Sila cuba lagi.',
 
     // Something
     'something_went_wrong' => 'Terdapat ralat',

@@ -42,6 +42,8 @@ return [
     'admin_events' => 'Events',
     'admin_languages' => 'Languages',
     'admin_logs' => 'Logs',
+    'admin_settings' => 'Settings',
+    'admin_site_config' => 'Site Config',
     'admin_users' => 'Users',
 
     // All
@@ -620,6 +622,21 @@ Wednesday: 7:30 PM (Prayer Meeting)',
     // Site
     'site_name' => 'CrossConnect MY',
     'site_tagline' => 'A CoreFLAME community project, built with love for the Malaysian Christian community. We\'re committed to serving churches and seekers with a platform that\'s free, accessible, and always improving.',
+    'site_config_desc' => 'Configure general site settings and URL options',
+    'clean_urls' => 'Clean URLs (SEO-Friendly)',
+    'clean_urls_desc' => 'Enable SEO-friendly URLs for better search engine rankings and user experience.',
+    'clean_urls_req_1' => 'Apache mod_rewrite must be enabled',
+    'clean_urls_req_2' => 'AllowOverride All must be set in Apache config',
+    'force_https' => 'Force HTTPS',
+    'force_https_desc' => 'Automatically redirect all HTTP requests to HTTPS for secure connections.',
+    'url_settings' => 'URL Settings',
+    'requirements' => 'Requirements',
+    'enabled' => 'Enabled',
+    'disabled' => 'Disabled',
+    'save_settings' => 'Save Settings',
+    'saving' => 'Saving...',
+    'success_settings_saved' => 'Settings saved successfully!',
+    'error_saving_settings' => 'Error saving settings. Please try again.',
 
     // Something
     'something_went_wrong' => 'Something went wrong',
