@@ -177,7 +177,7 @@ require_once 'includes/header.php';
                             </div>
                         <?php endif; ?>
                         <?php if (!empty($church['is_featured'])): ?>
-                            <span class="featured-badge">Featured</span>
+                            <span class="featured-badge"><?php _e('featured'); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="church-card-content">
