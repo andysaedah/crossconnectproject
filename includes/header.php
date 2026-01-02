@@ -6,6 +6,8 @@
 
 // Include path configuration for portable URLs (language.php is loaded automatically)
 require_once __DIR__ . '/../config/paths.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/settings.php';
 require_once __DIR__ . '/../config/auth.php';
 
 // Get current page for active nav state
@@ -112,8 +114,8 @@ $currentLang = getCurrentLanguage();
     <!-- Structured Data -->
     <?php if (isset($structuredData)): ?>
         <script type="application/ld+json">
-                                                                                                                <?php echo json_encode($structuredData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>
-                                                                                                                </script>
+                                                                                                                    <?php echo json_encode($structuredData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>
+                                                                                                                    </script>
     <?php endif; ?>
 </head>
 

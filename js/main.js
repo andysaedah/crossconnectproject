@@ -22,6 +22,21 @@ function assetUrl(path) {
     return getBasePath() + path.replace(/^\//, '');
 }
 
+// Clean URL helpers - check AppConfig.cleanUrls flag
+function churchUrl(slug) {
+    if (window.AppConfig && window.AppConfig.cleanUrls) {
+        return getBasePath() + 'church/' + encodeURIComponent(slug);
+    }
+    return getBasePath() + 'church.php?slug=' + encodeURIComponent(slug);
+}
+
+function eventUrl(slug) {
+    if (window.AppConfig && window.AppConfig.cleanUrls) {
+        return getBasePath() + 'events/' + encodeURIComponent(slug);
+    }
+    return getBasePath() + 'event.php?slug=' + encodeURIComponent(slug);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize components
     initMobileMenu();
@@ -527,7 +542,7 @@ function createChurchCard(church) {
         </div>
         <div class="church-card-content">
             <h3 class="church-card-name">
-                <a href="${pageUrl('church.php?slug=' + church.slug)}">${escapeHtml(church.name)}</a>
+                <a href="${churchUrl(church.slug)}">${escapeHtml(church.name)}</a>
             </h3>
             ${church.denomination_name ? `<div class="church-card-denomination">${escapeHtml(church.denomination_name)}</div>` : ''}
             <div class="church-card-location">

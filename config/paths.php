@@ -79,18 +79,11 @@ function url($path = '')
  */
 function isCleanUrlsEnabled()
 {
-    static $enabled = null;
-
-    if ($enabled === null) {
-        // Check if settings are available (database.php and settings.php loaded)
-        if (function_exists('getSetting')) {
-            $enabled = getSetting('clean_urls', '0') === '1';
-        } else {
-            $enabled = false;
-        }
+    // Check if settings are available (database.php and settings.php loaded)
+    if (function_exists('getSetting')) {
+        return getSetting('clean_urls', '0') === '1';
     }
-
-    return $enabled;
+    return false;
 }
 
 /**
@@ -165,6 +158,7 @@ function outputJsConfig()
 {
     $basePath = getBasePath();
     $baseUrl = getBaseUrl();
+    $cleanUrls = isCleanUrlsEnabled();
 
     // Translations for JavaScript
     $translations = [
@@ -177,7 +171,7 @@ function outputJsConfig()
         'tryAgainLater' => __('try_again_later'),
     ];
 
-    echo '<script>window.AppConfig={basePath:"' . addslashes($basePath) . '",baseUrl:"' . addslashes($baseUrl) . '",translations:' . json_encode($translations, JSON_UNESCAPED_UNICODE) . '};</script>';
+    echo '<script>window.AppConfig={basePath:"' . addslashes($basePath) . '",baseUrl:"' . addslashes($baseUrl) . '",cleanUrls:' . ($cleanUrls ? 'true' : 'false') . ',translations:' . json_encode($translations, JSON_UNESCAPED_UNICODE) . '};</script>';
 }
 
 // Define constants for convenience
