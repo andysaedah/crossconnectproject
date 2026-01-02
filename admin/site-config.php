@@ -56,6 +56,7 @@ $forceHttps = getSetting('force_https', '1');
             </div>
             <div class="setting-control">
                 <label class="toggle-switch">
+                    <input type="hidden" name="settings[clean_urls]" value="0">
                     <input type="checkbox" name="settings[clean_urls]" id="clean_urls" value="1"
                         <?php echo $cleanUrls === '1' ? 'checked' : ''; ?>>
                     <span class="toggle-slider"></span>
@@ -91,6 +92,7 @@ $forceHttps = getSetting('force_https', '1');
             </div>
             <div class="setting-control">
                 <label class="toggle-switch">
+                    <input type="hidden" name="settings[force_https]" value="0">
                     <input type="checkbox" name="settings[force_https]" id="force_https" value="1"
                         <?php echo $forceHttps === '1' ? 'checked' : ''; ?>>
                     <span class="toggle-slider"></span>
