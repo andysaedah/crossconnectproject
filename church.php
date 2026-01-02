@@ -400,39 +400,19 @@ require_once 'includes/header.php';
                     <?php endif; ?>
 
                     <?php /* Twitter hidden for now
-              <?php if (!empty($church['twitter'])): ?>
-                  <a href="https://twitter.com/<?php echo htmlspecialchars($church['twitter']); ?>" target="_blank"
-                      rel="noopener" class="social-link-large" title="Twitter">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                          <path
-                              d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
-                      </svg>
-                  </a>
-              <?php endif; ?>
-              */ ?>
+            <?php if (!empty($church['twitter'])): ?>
+                <a href="https://twitter.com/<?php echo htmlspecialchars($church['twitter']); ?>" target="_blank"
+                    rel="noopener" class="social-link-large" title="Twitter">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                    </svg>
+                </a>
+            <?php endif; ?>
+            */ ?>
                 </div>
             </div>
         <?php endif; ?>
-</div>
-
-<!-- Report Incorrect Info Card -->
-<div class="report-card">
-    <div class="report-card-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-    </div>
-    <h3 class="report-card-title"><?php _e('see_something_wrong'); ?></h3>
-    <p class="report-card-text"><?php _e('report_incorrect_info_desc'); ?></p>
-    <button type="button" class="report-btn" onclick="openReportModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-        </svg>
-        <?php _e('report_incorrect_info'); ?>
-    </button>
 </div>
 </aside>
 </div>
@@ -1166,6 +1146,91 @@ require_once 'includes/header.php';
     .upload-placeholder span {
         font-size: 0.875rem;
     }
+
+    /* Church CTA Banner - Bottom of Page */
+    .church-cta-banner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        padding: 32px;
+        background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #e0e7ff 100%);
+        border-radius: 16px;
+        margin: 40px auto 20px;
+        max-width: 800px;
+    }
+
+    .church-cta-icon {
+        flex-shrink: 0;
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .church-cta-icon svg {
+        width: 28px;
+        height: 28px;
+        color: white;
+    }
+
+    .church-cta-text {
+        text-align: center;
+        flex: 1;
+    }
+
+    .church-cta-text h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin-bottom: 4px;
+    }
+
+    .church-cta-text p {
+        font-size: 0.9rem;
+        color: var(--color-text-light);
+        margin: 0;
+    }
+
+    .church-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        flex-shrink: 0;
+    }
+
+    .church-cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+    }
+
+    .church-cta-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    @media (max-width: 768px) {
+        .church-cta-banner {
+            flex-direction: column;
+            text-align: center;
+            padding: 24px 20px;
+            gap: 16px;
+        }
+    }
 </style>
 
 <script>
@@ -1373,5 +1438,27 @@ require_once 'includes/header.php';
         </div>
     </section>
 <?php endif; ?>
+
+<!-- CTA Banner - Bottom of Page (See Something Wrong) -->
+<div class="church-cta-banner">
+    <div class="church-cta-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+    </div>
+    <div class="church-cta-text">
+        <h3><?php _e('see_something_wrong'); ?></h3>
+        <p><?php _e('report_incorrect_info_desc'); ?></p>
+    </div>
+    <button type="button" class="church-cta-btn" onclick="openReportModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </svg>
+        <?php _e('report_incorrect_info'); ?>
+    </button>
+</div>
 
 <?php require_once 'includes/footer.php'; ?>
