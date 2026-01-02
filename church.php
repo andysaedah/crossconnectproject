@@ -400,16 +400,16 @@ require_once 'includes/header.php';
                     <?php endif; ?>
 
                     <?php /* Twitter hidden for now
-            <?php if (!empty($church['twitter'])): ?>
-                <a href="https://twitter.com/<?php echo htmlspecialchars($church['twitter']); ?>" target="_blank"
-                    rel="noopener" class="social-link-large" title="Twitter">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
-                    </svg>
-                </a>
-            <?php endif; ?>
-            */ ?>
+           <?php if (!empty($church['twitter'])): ?>
+               <a href="https://twitter.com/<?php echo htmlspecialchars($church['twitter']); ?>" target="_blank"
+                   rel="noopener" class="social-link-large" title="Twitter">
+                   <svg viewBox="0 0 24 24" fill="currentColor">
+                       <path
+                           d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                   </svg>
+               </a>
+           <?php endif; ?>
+           */ ?>
                 </div>
             </div>
         <?php endif; ?>
@@ -1390,6 +1390,28 @@ require_once 'includes/header.php';
     <?php endif; ?>
 </script>
 
+<!-- CTA Banner - See Something Wrong -->
+<div class="church-cta-banner">
+    <div class="church-cta-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+    </div>
+    <div class="church-cta-text">
+        <h3><?php _e('see_something_wrong'); ?></h3>
+        <p><?php _e('report_incorrect_info_desc'); ?></p>
+    </div>
+    <button type="button" class="church-cta-btn" onclick="openReportModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </svg>
+        <?php _e('report_incorrect_info'); ?>
+    </button>
+</div>
+
 <!-- Related Churches -->
 <?php if ($relatedChurches && count($relatedChurches) > 0): ?>
     <section class="related-churches">
@@ -1438,27 +1460,5 @@ require_once 'includes/header.php';
         </div>
     </section>
 <?php endif; ?>
-
-<!-- CTA Banner - Bottom of Page (See Something Wrong) -->
-<div class="church-cta-banner">
-    <div class="church-cta-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-    </div>
-    <div class="church-cta-text">
-        <h3><?php _e('see_something_wrong'); ?></h3>
-        <p><?php _e('report_incorrect_info_desc'); ?></p>
-    </div>
-    <button type="button" class="church-cta-btn" onclick="openReportModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-        </svg>
-        <?php _e('report_incorrect_info'); ?>
-    </button>
-</div>
 
 <?php require_once 'includes/footer.php'; ?>
