@@ -1015,7 +1015,6 @@ ol {
 
 .church-hero-image {
     width: 100%;
-    max-width: 600px;
     margin: 0 auto var(--spacing-lg);
     border-radius: var(--radius-lg);
     overflow: hidden;
