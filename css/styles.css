@@ -2075,16 +2075,16 @@ ol {
 
 /* CTA Banner - Premium Design */
 .event-cta-banner {
-    margin-top: 48px;
-    padding: 28px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 32px;
     background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 30%, #ede9fe 70%, #f5f3ff 100%);
     border-radius: 16px;
     border: 1px solid rgba(139, 92, 246, 0.15);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
+    margin: 40px auto 20px;
+    max-width: 800px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(139, 92, 246, 0.08);
@@ -2126,23 +2126,25 @@ ol {
     }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .event-cta-banner {
-        padding: 32px 40px;
-        gap: 14px;
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+        gap: 16px;
     }
 }
 
 .event-cta-icon {
-    width: 52px;
-    height: 52px;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
     background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%);
-    border-radius: 14px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
     position: relative;
     z-index: 1;
@@ -2154,58 +2156,56 @@ ol {
 }
 
 .event-cta-icon svg {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
 }
 
 .event-cta-text {
     flex: 1;
+    text-align: center;
     position: relative;
     z-index: 1;
 }
 
 .event-cta-text h3 {
-    font-size: 17px;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 600;
     margin: 0 0 4px 0;
     color: var(--color-text);
 }
 
 .event-cta-text p {
-    font-size: 13px;
+    font-size: 0.9rem;
     color: var(--color-text-light);
     margin: 0;
-    max-width: 520px;
-    line-height: 1.5;
 }
 
 .event-cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 20px;
+    gap: 8px;
+    padding: 12px 24px;
     background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
     color: white;
     font-weight: 600;
-    font-size: 14px;
-    border-radius: 10px;
+    font-size: 0.95rem;
+    border-radius: 12px;
     text-decoration: none;
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(8, 145, 178, 0.25);
-    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
+    transition: all 0.3s ease;
     position: relative;
     z-index: 1;
 }
 
 .event-cta-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
 }
 
 .event-cta-btn:hover {
-    background: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.35);
+    box-shadow: 0 6px 20px rgba(8, 145, 178, 0.4);
 }
 
 .event-poster {
