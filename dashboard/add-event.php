@@ -575,10 +575,10 @@ try {
             const formData = new FormData(this);
 
             // DEBUG: Log form data
-            console.log('=== ADD EVENT DEBUG ===');
-            console.log('Sending form data:');
+            debugLog('=== ADD EVENT DEBUG ===');
+            debugLog('Sending form data:');
             for (let [key, value] of formData.entries()) {
-                console.log(key + ':', value);
+                debugLog(key + ':', value);
             }
 
             const response = await fetch(basePath + 'api/user/events.php', {
@@ -588,15 +588,15 @@ try {
 
             // DEBUG: Log raw response
             const responseText = await response.text();
-            console.log('Raw API response:', responseText);
-            console.log('Response status:', response.status);
+            debugLog('Raw API response:', responseText);
+            debugLog('Response status:', response.status);
 
             let data;
             try {
                 data = JSON.parse(responseText);
             } catch (parseError) {
-                console.error('JSON parse error:', parseError);
-                console.error('Response was:', responseText);
+                debugLog('JSON parse error:', parseError);
+                debugLog('Response was:', responseText);
                 showToast('Server error: ' + responseText.substring(0, 100), 'error');
                 btn.disabled = false;
                 btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> ' + translations.saveEvent;
@@ -609,13 +609,13 @@ try {
                     window.location.href = basePath + 'dashboard/my-events.php';
                 }, 1000);
             } else {
-                console.log('API returned error:', data.error);
+                debugLog('API returned error:', data.error);
                 showToast(data.error || translations.addFailed, 'error');
                 btn.disabled = false;
                 btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> ' + translations.saveEvent;
             }
         } catch (error) {
-            console.error('Fetch error:', error);
+            debugLog('Fetch error:', error);
             showToast(translations.errorOccurred, 'error');
             btn.disabled = false;
             btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> ' + translations.saveEvent;

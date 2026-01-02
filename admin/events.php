@@ -855,12 +855,12 @@ try {
     }
 
     async function deleteEvent(id, name) {
-        console.log('=== DELETE EVENT DEBUG ===');
-        console.log('Event ID:', id);
-        console.log('Event Name:', name);
+        debugLog('=== DELETE EVENT DEBUG ===');
+        debugLog('Event ID:', id);
+        debugLog('Event Name:', name);
 
         if (!confirm(`Are you sure you want to permanently delete "${name}"?\n\nThis action cannot be undone.`)) {
-            console.log('User cancelled delete');
+            debugLog('User cancelled delete');
             return;
         }
 
@@ -870,7 +870,7 @@ try {
             formData.append('id', id);
             formData.append('action', 'delete');
 
-            console.log('Sending to:', basePath + 'api/admin/events.php');
+            debugLog('Sending to:', basePath + 'api/admin/events.php');
 
             const response = await fetch(basePath + 'api/admin/events.php', {
                 method: 'POST',
@@ -878,15 +878,15 @@ try {
             });
 
             const responseText = await response.text();
-            console.log('Raw response:', responseText);
-            console.log('Response status:', response.status);
+            debugLog('Raw response:', responseText);
+            debugLog('Response status:', response.status);
 
             let data;
             try {
                 data = JSON.parse(responseText);
             } catch (parseError) {
-                console.error('JSON parse error:', parseError);
-                console.error('Response was:', responseText);
+                debugLog('JSON parse error:', parseError);
+                debugLog('Response was:', responseText);
                 showToast('Server error: ' + responseText.substring(0, 100), 'error');
                 return;
             }
@@ -895,11 +895,11 @@ try {
                 showToast('Event deleted successfully', 'success');
                 loadData();
             } else {
-                console.log('API returned error:', data.error);
+                debugLog('API returned error:', data.error);
                 showToast(data.error || 'Failed to delete event', 'error');
             }
         } catch (error) {
-            console.error('Delete error:', error);
+            debugLog('Delete error:', error);
             showToast('Failed to delete event', 'error');
         }
     }
