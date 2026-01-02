@@ -19,6 +19,7 @@ $pageTitle = __('admin_site_config');
 // Get current settings
 $cleanUrls = getSetting('clean_urls', '0');
 $forceHttps = getSetting('force_https', '1');
+$debugMode = getSetting('debug_mode', '0');
 ?>
 
 <!-- Page Header -->
@@ -97,6 +98,39 @@ $forceHttps = getSetting('force_https', '1');
                         <?php echo $forceHttps === '1' ? 'checked' : ''; ?>>
                     <span class="toggle-slider"></span>
                 </label>
+            </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- Debug Mode Toggle -->
+        <div class="setting-item">
+            <div class="setting-info">
+                <label class="setting-label"><?php _e('debug_mode'); ?></label>
+                <p class="setting-description"><?php _e('debug_mode_desc'); ?></p>
+            </div>
+            <div class="setting-control">
+                <label class="toggle-switch">
+                    <input type="hidden" name="settings[debug_mode]" value="0">
+                    <input type="checkbox" name="settings[debug_mode]" id="debug_mode" value="1"
+                        <?php echo $debugMode === '1' ? 'checked' : ''; ?>>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Debug Warning -->
+        <div class="requirements-notice" style="background: #fef3c7; border-color: #f59e0b;">
+            <div class="notice-icon" style="color: #d97706;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <div class="notice-content">
+                <strong><?php _e('for_developers'); ?></strong>
+                <p style="margin: 4px 0 0; font-size: 0.85rem;"><?php _e('debug_mode_warning'); ?></p>
             </div>
         </div>
 

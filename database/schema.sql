@@ -257,7 +257,8 @@ INSERT INTO settings (setting_key, setting_value, setting_group, is_encrypted) V
     ('force_https', '1', 'general', FALSE),
     ('telegram_enabled', '0', 'telegram', FALSE),
     ('telegram_bot_token', '', 'telegram', TRUE),
-    ('telegram_chat_id', '', 'telegram', FALSE)
+    ('telegram_chat_id', '', 'telegram', FALSE),
+    ('debug_mode', '0', 'general', FALSE)
 ON DUPLICATE KEY UPDATE setting_key = setting_key;
 
 -- =====================================================

@@ -159,6 +159,7 @@ function outputJsConfig()
     $basePath = getBasePath();
     $baseUrl = getBaseUrl();
     $cleanUrls = isCleanUrlsEnabled();
+    $debugMode = function_exists('getSetting') ? getSetting('debug_mode', '0') === '1' : false;
 
     // Translations for JavaScript
     $translations = [
@@ -171,7 +172,9 @@ function outputJsConfig()
         'tryAgainLater' => __('try_again_later'),
     ];
 
-    echo '<script>window.AppConfig={basePath:"' . addslashes($basePath) . '",baseUrl:"' . addslashes($baseUrl) . '",cleanUrls:' . ($cleanUrls ? 'true' : 'false') . ',translations:' . json_encode($translations, JSON_UNESCAPED_UNICODE) . '};</script>';
+    echo '<script>window.AppConfig={basePath:"' . addslashes($basePath) . '",baseUrl:"' . addslashes($baseUrl) . '",cleanUrls:' . ($cleanUrls ? 'true' : 'false') . ',debug:' . ($debugMode ? 'true' : 'false') . ',translations:' . json_encode($translations, JSON_UNESCAPED_UNICODE) . '};';
+    echo 'function debugLog(...args){if(window.AppConfig&&window.AppConfig.debug){console.log(...args);}}';
+    echo '</script>';
 }
 
 // Define constants for convenience
