@@ -415,6 +415,15 @@ try {
 </style>
 
 <script>
+    // Debug logging (fallback if outputJsConfig not called)
+    if (typeof debugLog === 'undefined') {
+        window.debugLog = function (...args) {
+            if (window.AppConfig && window.AppConfig.debug) {
+                console.log(...args);
+            }
+        };
+    }
+
     // Photo upload preview
     document.getElementById('photoInput').addEventListener('change', function (e) {
         const file = e.target.files[0];
@@ -446,12 +455,34 @@ try {
         try {
             const formData = new FormData(this);
 
+            // DEBUG: Log form data
+            debugLog('=== ADD CHURCH DEBUG ===');
+            debugLog('Sending form data:');
+            for (let [key, value] of formData.entries()) {
+                debugLog(key + ':', value);
+            }
+
             const response = await fetch(basePath + 'api/user/churches.php', {
                 method: 'POST',
                 body: formData
             });
 
-            const data = await response.json();
+            // DEBUG: Log raw response
+            const responseText = await response.text();
+            debugLog('Raw API response:', responseText);
+            debugLog('Response status:', response.status);
+
+            let data;
+            try {
+                data = JSON.parse(responseText);
+            } catch (parseError) {
+                debugLog('JSON parse error:', parseError);
+                debugLog('Response was:', responseText);
+                showToast('Server error: ' + responseText.substring(0, 100), 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Save Church';
+                return;
+            }
 
             if (data.success) {
                 showToast('Church added successfully!', 'success');
@@ -459,11 +490,13 @@ try {
                     window.location.href = basePath + 'admin/churches.php';
                 }, 1000);
             } else {
+                debugLog('API returned error:', data.error);
                 showToast(data.error || 'Failed to add church', 'error');
                 btn.disabled = false;
                 btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Save Church';
             }
         } catch (error) {
+            debugLog('Fetch error:', error);
             showToast('An error occurred', 'error');
             btn.disabled = false;
             btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Save Church';
