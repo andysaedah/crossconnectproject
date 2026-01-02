@@ -252,7 +252,9 @@ INSERT INTO settings (setting_key, setting_value, setting_group, is_encrypted) V
     ('smtp2go_sender_name', 'CrossConnect MY', 'email', FALSE),
     ('brevo_api_key', '', 'email', TRUE),
     ('brevo_sender_email', 'noreply@crossconnect.my', 'email', FALSE),
-    ('brevo_sender_name', 'CrossConnect MY', 'email', FALSE)
+    ('brevo_sender_name', 'CrossConnect MY', 'email', FALSE),
+    ('clean_urls', '0', 'general', FALSE),
+    ('force_https', '1', 'general', FALSE)
 ON DUPLICATE KEY UPDATE setting_key = setting_key;
 
 -- =====================================================
