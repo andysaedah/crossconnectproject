@@ -16,9 +16,11 @@ A comprehensive web application for discovering churches and Christian events ac
 - **Church Directory** - Browse and search churches by state, denomination, or keyword
 - **Event Listings** - Discover upcoming Christian events with multi-day support
 - **SEO-Friendly URLs** - Clean URLs like `/church/church-name` and `/events/event-slug`
-- **Multi-Language Support** - English and Bahasa Malaysia
+- **Multi-Language Support** - English and Bahasa Malaysia with full translation coverage
 - **Mobile Responsive** - Optimized for all device sizes
 - **Scripture Quotes** - Inspirational verses on homepage and about page
+- **Social Sharing** - Share events to WhatsApp, Facebook, and X (Twitter)
+- **Report Amendments** - Users can report incorrect church information
 
 ### User Dashboard
 - **My Churches** - Manage your church listings
@@ -28,12 +30,30 @@ A comprehensive web application for discovering churches and Christian events ac
 
 ### Admin Dashboard
 - **User Management** - View and manage registered users
-- **Church Moderation** - Approve, edit, or delete church listings
+- **Church Moderation** - Approve, edit, or delete church listings with amendment requests
 - **Event Management** - Moderate submitted events
 - **Activity Logs** - Full audit trail of all actions
-- **Email Logs** - Track sent verification emails
+- **Email Logs** - Track sent verification emails with delivery status
 - **Language Editor** - Manage translations in-app
-- **API Integration Settings** - Configure external services
+- **API Integration Settings** - Configure SMTP2GO, Brevo email, and Telegram notifications
+- **Site Configuration** - Manage app settings, debug mode, demo data
+
+---
+
+## 🔔 Notifications
+
+### Email Notifications (SMTP2GO / Brevo)
+- User verification emails
+- Password reset emails
+- Welcome emails on verification
+- Admin notifications for new churches, events, amendments, and bug reports
+
+### Telegram Notifications
+- Real-time admin alerts for:
+  - New church submissions
+  - New event submissions
+  - Amendment requests
+  - Bug reports
 
 ---
 
@@ -52,6 +72,7 @@ A comprehensive web application for discovering churches and Christian events ac
 | **SQL Injection Prevention** | Prepared statements throughout |
 | **Sensitive File Protection** | `.htaccess` blocks `.env`, `/config/`, etc. |
 | **Security Headers** | X-Frame-Options, CSP, XSS-Protection |
+| **Browser Translation Control** | Disabled on login page to preserve localization |
 
 ---
 
@@ -61,34 +82,43 @@ A comprehensive web application for discovering churches and Christian events ac
 hebats/
 ├── admin/                  # Admin dashboard pages
 │   ├── index.php          # Admin overview
-│   ├── churches.php       # Church management
+│   ├── churches.php       # Church management with amendments
 │   ├── events.php         # Event management
 │   ├── users.php          # User management
 │   ├── logs.php           # Activity logs
+│   ├── email-logs.php     # Email delivery tracking
+│   ├── api-settings.php   # SMTP2GO, Brevo, Telegram config
+│   ├── site-config.php    # Application settings
+│   ├── language.php       # Translation manager
 │   └── ...
 ├── api/                    # REST API endpoints
 │   ├── auth/              # Login, register
 │   ├── admin/             # Admin-only APIs
 │   ├── user/              # User dashboard APIs
+│   ├── webhook/           # Email provider webhooks (SMTP2GO, Brevo)
 │   ├── churches.php       # Public church API
 │   ├── events.php         # Public events API
-│   └── states.php         # States list API
+│   ├── states.php         # States list API
+│   ├── report-amendment.php # Amendment reporting
+│   └── report-bug.php     # Bug/feedback reporting
 ├── auth/                   # Authentication pages
-│   ├── login.php          # Login/Register form
+│   ├── login.php          # Login/Register form (translation-protected)
 │   ├── logout.php         # Logout handler
 │   ├── verify.php         # Email verification
 │   └── verify-pending.php # Verification pending
 ├── config/                 # Configuration files
 │   ├── database.php       # DB connection & env loading
 │   ├── auth.php           # Authentication functions
-│   ├── email.php          # Email sending (SMTP/Brevo)
+│   ├── email.php          # Email sending (SMTP2GO/Brevo with fallback)
+│   ├── telegram.php       # Telegram notification integration
 │   ├── language.php       # Language handling
-│   ├── paths.php          # URL helpers
+│   ├── settings.php       # Database settings management
+│   ├── paths.php          # URL helpers with clean URL support
 │   └── lang/              # Translation files (en.php, bm.php)
 ├── css/                    # Stylesheets
 ├── dashboard/              # User dashboard pages
 ├── database/               # SQL schema & migrations
-├── images/                 # Static images
+├── images/                 # Static images (favicon, og-default)
 ├── includes/               # Shared components
 ├── js/                     # JavaScript files
 ├── uploads/                # User uploads (gitignored)
@@ -98,6 +128,8 @@ hebats/
 ├── church.php             # Individual church page
 ├── event.php              # Individual event page
 ├── events.php             # Events listing
+├── state.php              # Churches by state
+├── denomination.php       # Churches by denomination
 └── ...
 ```
 
@@ -141,13 +173,6 @@ APP_DEBUG=false
 mysql -u username -p database_name < database/schema.sql
 ```
 
-Or run migrations individually:
-```bash
-mysql -u username -p database_name < database/migrations/add_event_format_columns.sql
-mysql -u username -p database_name < database/migrations/add_service_languages.sql
-# ... etc
-```
-
 ### Step 4: Set Permissions
 ```bash
 chmod 755 uploads/
@@ -158,6 +183,17 @@ Ensure `.htaccess` is enabled. For subdirectory installations, update:
 ```apache
 RewriteBase /your-subdirectory/
 ```
+
+### Step 6: Configure Admin Settings
+1. Login as admin
+2. Go to **Admin > API Settings** and configure:
+   - SMTP2GO API key and sender details
+   - (Optional) Brevo fallback
+   - (Optional) Telegram bot token and chat ID
+3. Go to **Admin > Site Config** and set:
+   - Admin notification email
+   - Enable/disable demo data
+   - Enable/disable debug mode
 
 ---
 
@@ -175,12 +211,14 @@ RewriteBase /your-subdirectory/
 | `APP_ENV` | Environment mode | `production` |
 | `APP_DEBUG` | Show errors | `false` |
 
-### Production Settings
-For production, always use:
-```env
-APP_ENV=production
-APP_DEBUG=false
-```
+### Database Settings (via Admin Panel)
+- `admin_notification_email` - Email for admin notifications
+- `smtp2go_api_key` - SMTP2GO API key
+- `telegram_bot_token` - Telegram bot token
+- `telegram_chat_id` - Telegram chat ID for notifications
+- `enable_demo_data` - Show demo churches/events when database is empty
+- `debug_mode` - Enable debug logging
+- `clean_urls` - Enable SEO-friendly URL routing
 
 ---
 
@@ -194,6 +232,8 @@ APP_DEBUG=false
 | `/api/events.php` | GET | List all events |
 | `/api/events.php?upcoming=1` | GET | Get upcoming events |
 | `/api/states.php` | GET | List all states |
+| `/api/report-amendment.php` | POST | Submit church amendment |
+| `/api/report-bug.php` | POST | Submit bug report |
 
 ### User APIs (Authenticated)
 | Endpoint | Method | Description |
@@ -203,8 +243,11 @@ APP_DEBUG=false
 | `/api/user/events.php` | GET/POST | Manage user's events |
 | `/api/user/change-password.php` | POST | Change password |
 
-### Admin APIs
-All admin endpoints require admin role authentication.
+### Webhook Endpoints
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/webhook/smtp2go.php` | POST | SMTP2GO delivery tracking |
+| `/api/webhook/brevo.php` | POST | Brevo delivery tracking |
 
 ---
 
@@ -215,10 +258,10 @@ The application supports:
 - **Bahasa Malaysia (bm)**
 
 Language files are located in `config/lang/`:
-- `en.php` - English translations
+- `en.php` - English translations (~800+ keys)
 - `bm.php` - Bahasa Malaysia translations
 
-Users can switch languages via the UI, and preference is saved to session/cookie.
+Users can switch languages via the header UI, and preference is saved to session/cookie.
 
 ---
 
@@ -229,37 +272,22 @@ The UI is fully responsive with:
 - Collapsible sidebar on dashboard
 - Touch-friendly controls
 - Optimized images with lazy loading
-
----
-
-## 🔧 Customization
-
-### Adding a New Language
-1. Copy `config/lang/en.php` to `config/lang/xx.php`
-2. Translate all values
-3. Update `config/language.php` to include new language
-4. Add language switcher button in UI
-
-### Adding New Features
-- API endpoints go in `/api/`
-- Dashboard pages go in `/dashboard/` or `/admin/`
-- Use `requireAuth()` for user pages
-- Use `requireAdmin()` for admin pages
+- Mobile-specific titles for church/event pages
 
 ---
 
 ## 📊 Database Schema
 
 ### Main Tables
-- `users` - User accounts
-- `churches` - Church listings
-- `events` - Event listings
-- `states` - Malaysian states
+- `users` - User accounts with email verification
+- `churches` - Church listings with social links
+- `events` - Event listings with multi-day support
+- `states` - Malaysian states (16 states)
 - `denominations` - Church denominations
-- `activity_logs` - Audit trail
-- `email_logs` - Email tracking
-- `settings` - Application settings
-- `amendment_requests` - Church info corrections
+- `activity_logs` - Full audit trail
+- `email_logs` - Email delivery tracking
+- `settings` - Application settings (key-value store)
+- `amendment_requests` - Church info correction requests
 
 ---
 
@@ -284,6 +312,7 @@ This project is licensed under the MIT License.
 - Built for the Christian community in Malaysia
 - Inspired by the need for a unified church directory
 - Scripture quotes from NIV Bible
+- A CoreFLAME Community Project
 
 ---
 
