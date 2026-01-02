@@ -113,9 +113,6 @@ require_once 'includes/header.php';
             <div class="church-hero-image">
                 <img src="<?php echo htmlspecialchars($event['poster_url']); ?>" loading="eager" decoding="async"
                     fetchpriority="high" alt="<?php echo htmlspecialchars($event['name']); ?>">
-                <?php if (!empty($event['is_featured'])): ?>
-                    <span class="featured-badge"><?php _e('featured_event'); ?></span>
-                <?php endif; ?>
             </div>
         <?php endif; ?>
 

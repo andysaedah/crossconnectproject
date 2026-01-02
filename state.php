@@ -152,7 +152,7 @@ require_once 'includes/header.php';
     <?php if ($churches && count($churches) > 0): ?>
         <div class="churches-grid">
             <?php foreach ($churches as $church): ?>
-                <article class="church-card<?php echo !empty($church['is_featured']) ? ' featured' : ''; ?>">
+                <article class="church-card">
                     <div class="church-card-image">
                         <?php if (!empty($church['image_url'])): ?>
                             <img src="<?php echo htmlspecialchars($church['image_url']); ?>" loading="lazy"
@@ -168,9 +168,6 @@ require_once 'includes/header.php';
                                         stroke-linejoin="round" />
                                 </svg>
                             </div>
-                        <?php endif; ?>
-                        <?php if (!empty($church['is_featured'])): ?>
-                            <span class="featured-badge"><?php _e('featured'); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="church-card-content">

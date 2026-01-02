@@ -250,7 +250,7 @@ require_once 'includes/header.php';
 
     function createEventCard(event) {
         const card = document.createElement('article');
-        card.className = 'event-card' + (event.is_featured ? ' featured' : '');
+        card.className = 'event-card';
 
         const posterUrl = event.poster_url || assetUrl('images/event-placeholder.svg');
         const eventDate = new Date(event.event_date);
@@ -290,7 +290,6 @@ require_once 'includes/header.php';
                 <span class="event-date-day">${day}</span>
                 <span class="event-date-month">${month}</span>
             </div>
-            ${event.is_featured ? `<span class="featured-badge">${translations.featured}</span>` : ''}
         </div>
         <div class="event-card-content">
             <h3 class="event-card-title">
