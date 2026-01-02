@@ -5,13 +5,16 @@
  */
 
 $currentPage = 'site-config';
-$pageTitle = __('admin_site_config');
+$pageTitle = 'Site Config'; // Set before include, will be overridden after
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../config/settings.php';
 require_once __DIR__ . '/../includes/dashboard-header.php';
 
 requireAdmin();
+
+// Update page title with translation (after language is loaded)
+$pageTitle = __('admin_site_config');
 
 // Get current settings
 $cleanUrls = getSetting('clean_urls', '0');
