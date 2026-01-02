@@ -782,7 +782,7 @@ try {
                 showToast(data.error || 'Failed to save', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         } finally {
             btn.disabled = false;
             btn.textContent = 'Save Event';
@@ -814,7 +814,7 @@ try {
                 showToast(data.error || 'Failed', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         }
     }
 
@@ -855,11 +855,11 @@ try {
                 document.getElementById('modalOverlay').classList.add('show');
                 document.getElementById('eventModal').classList.add('show');
             } else {
-                showToast('Failed to load event data', 'error');
+                showToast('<?php _e('error_loading_event'); ?>', 'error');
             }
         } catch (error) {
             console.error('Edit error:', error);
-            showToast('Failed to load event data', 'error');
+            showToast('<?php _e('error_loading_event'); ?>', 'error');
         }
     }
 
@@ -901,7 +901,7 @@ try {
             }
 
             if (data.success) {
-                showToast('Event deleted successfully', 'success');
+                showToast('<?php _e('success_event_deleted'); ?>', 'success');
                 loadData();
             } else {
                 debugLog('API returned error:', data.error);
@@ -909,7 +909,7 @@ try {
             }
         } catch (error) {
             debugLog('Delete error:', error);
-            showToast('Failed to delete event', 'error');
+            showToast('<?php _e('error_delete_event'); ?>', 'error');
         }
     }
 

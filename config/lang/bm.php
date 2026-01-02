@@ -677,6 +677,13 @@ Rabu: 7:30 malam (Persekutuan Doa)',
     'success_settings_saved' => 'Tetapan berjaya disimpan',
     'success_status_updated' => 'Status berjaya dikemaskini',
     'success_test_email_sent' => 'E-mel ujian berjaya dihantar',
+    'success_amendment_resolved' => 'Pindaan ditanda sebagai selesai',
+
+    // Error messages
+    'error_loading_church' => 'Gagal memuatkan data gereja',
+    'error_loading_event' => 'Gagal memuatkan data acara',
+    'error_delete_church' => 'Gagal memadam gereja',
+    'error_delete_event' => 'Gagal memadam acara',
 
     // Terms
     'terms_acceptance' => 'Penerimaan Terma',

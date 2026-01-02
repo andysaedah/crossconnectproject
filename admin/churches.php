@@ -1005,7 +1005,7 @@ try {
                 showToast(data.error || 'Failed to save', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         } finally {
             btn.disabled = false;
             btn.textContent = 'Save Church';
@@ -1037,7 +1037,7 @@ try {
                 showToast(data.error || 'Failed', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         }
     }
 
@@ -1106,11 +1106,11 @@ try {
                 document.getElementById('modalOverlay').classList.add('show');
                 document.getElementById('churchModal').classList.add('show');
             } else {
-                showToast('Failed to load church data', 'error');
+                showToast('<?php _e('error_loading_church'); ?>', 'error');
             }
         } catch (error) {
             console.error('Edit error:', error);
-            showToast('Failed to load church data', 'error');
+            showToast('<?php _e('error_loading_church'); ?>', 'error');
         }
     }
 
@@ -1134,7 +1134,7 @@ try {
             const data = await response.json();
 
             if (data.success) {
-                showToast('Amendment marked as resolved', 'success');
+                showToast('<?php _e('success_amendment_resolved'); ?>', 'success');
                 document.getElementById('amendmentAlert').style.display = 'none';
                 closeModal();
                 setTimeout(() => location.reload(), 1000);
@@ -1142,7 +1142,7 @@ try {
                 showToast(data.error || 'Failed to clear amendment', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         }
     }
 
@@ -1208,7 +1208,7 @@ try {
             }
 
             if (data.success) {
-                showToast('Church deleted successfully', 'success');
+                showToast('<?php _e('success_church_deleted'); ?>', 'success');
                 loadData();
             } else {
                 console.error('API error:', data.error);
@@ -1218,7 +1218,7 @@ try {
         } catch (error) {
             console.error('Delete fetch error:', error);
             debugLog('Delete error:', error);
-            showToast('Failed to delete church', 'error');
+            showToast('<?php _e('error_delete_church'); ?>', 'error');
         }
     }
 

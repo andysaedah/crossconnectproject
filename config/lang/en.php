@@ -677,6 +677,13 @@ Wednesday: 7:30 PM (Prayer Meeting)',
     'success_settings_saved' => 'Settings saved successfully',
     'success_status_updated' => 'Status updated successfully',
     'success_test_email_sent' => 'Test email sent successfully',
+    'success_amendment_resolved' => 'Amendment marked as resolved',
+
+    // Error messages
+    'error_loading_church' => 'Failed to load church data',
+    'error_loading_event' => 'Failed to load event data',
+    'error_delete_church' => 'Failed to delete church',
+    'error_delete_event' => 'Failed to delete event',
 
     // Terms
     'terms_acceptance' => 'Acceptance of Terms',
