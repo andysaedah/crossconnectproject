@@ -266,7 +266,7 @@ ON DUPLICATE KEY UPDATE setting_key = setting_key;
 -- Password: system32! (CHANGE THIS AFTER FIRST LOGIN!)
 -- =====================================================
 INSERT INTO users (username, email, password_hash, name, role, email_verified_at, is_active, avatar_color) VALUES
-('admin', 'admin@crossconnect.my', '$2y$12$Y9MHLBXJtXH5ehJrMvMFFe45xspdtn1DYYTU6TgHaaJfIXZazRbqy', 'System Admin', 'admin', NOW(), 1, '#0891b2')
+('admin', 'admin@crossconnect.my', '$2y$12$pDnFA4mL4aSrBzpCHgN7uezRa1dqAUySTAar/7CfY3aRUGvJ05fLK', 'System Admin', 'admin', NOW(), 1, '#0891b2')
 ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash), email_verified_at = NOW();
 
 SET FOREIGN_KEY_CHECKS = 1;

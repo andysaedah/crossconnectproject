@@ -23,16 +23,14 @@ function getBasePath()
     static $basePath = null;
 
     if ($basePath === null) {
-        // Simple approach: detect from SCRIPT_NAME by finding the app folder
         $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
 
-        // Look for common app folders in the path
+        // Check if installed in a subdirectory with 'hebats' in the name
         if (preg_match('#^(/[^/]*hebats[^/]*)/#i', $scriptName, $matches)) {
             $basePath = $matches[1] . '/';
-        } elseif (preg_match('#^(/[^/]+/)#', $scriptName, $matches)) {
-            // First directory segment
-            $basePath = $matches[1];
         } else {
+            // For root installations, always use '/'
+            // This prevents detecting /auth/, /admin/, etc. as the base path
             $basePath = '/';
         }
     }
