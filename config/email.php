@@ -473,20 +473,45 @@ function getEmailTemplate($template, $variables = [])
             </td>
         </tr>
         <tr>
-            <td style="background:white;padding:40px 30px;border-radius:0 0 8px 8px;">
-                <h2 style="color:#333;margin:0 0 20px;">Verify Your Email</h2>
-                <p style="color:#666;line-height:1.6;margin:0 0 20px;">
+            <td style="background:white;padding:40px 30px;">
+                <!-- English Version -->
+                <h2 style="color:#333;margin:0 0 15px;font-size:20px;">🇬🇧 Verify Your Email</h2>
+                <p style="color:#666;line-height:1.6;margin:0 0 15px;">
                     Hi {name},<br><br>
                     Thank you for registering with CrossConnect MY! Please verify your email address by clicking the button below:
                 </p>
-                <p style="text-align:center;margin:30px 0;">
+                <p style="text-align:center;margin:25px 0;">
                     <a href="{verify_url}" style="background:#0891b2;color:white;padding:14px 30px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:bold;">
                         Verify Email Address
                     </a>
                 </p>
-                <p style="color:#999;font-size:13px;margin:20px 0 0;">
+                <p style="color:#999;font-size:13px;margin:0 0 25px;">
                     If you didn\'t create an account, you can safely ignore this email.
                 </p>
+                
+                <!-- Divider -->
+                <hr style="border:none;border-top:1px solid #e5e5e5;margin:25px 0;">
+                
+                <!-- Bahasa Malaysia Version -->
+                <h2 style="color:#333;margin:0 0 15px;font-size:20px;">🇲🇾 Sahkan E-mel Anda</h2>
+                <p style="color:#666;line-height:1.6;margin:0 0 15px;">
+                    Hai {name},<br><br>
+                    Terima kasih kerana mendaftar dengan CrossConnect MY! Sila sahkan alamat e-mel anda dengan mengklik butang di bawah:
+                </p>
+                <p style="text-align:center;margin:25px 0;">
+                    <a href="{verify_url}" style="background:#0891b2;color:white;padding:14px 30px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:bold;">
+                        Sahkan Alamat E-mel
+                    </a>
+                </p>
+                <p style="color:#999;font-size:13px;margin:0;">
+                    Jika anda tidak membuat akaun, anda boleh mengabaikan e-mel ini.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="background:#f9fafb;padding:15px;text-align:center;color:#999;font-size:11px;border-radius:0 0 8px 8px;">
+                <p style="margin:0 0 5px;">Button not working? Copy and paste this link: | Butang tidak berfungsi? Salin dan tampal pautan ini:</p>
+                <p style="margin:0;word-break:break-all;"><a href="{verify_url}" style="color:#0891b2;">{verify_url}</a></p>
             </td>
         </tr>
         <tr>
@@ -513,20 +538,45 @@ function getEmailTemplate($template, $variables = [])
             </td>
         </tr>
         <tr>
-            <td style="background:white;padding:40px 30px;border-radius:0 0 8px 8px;">
-                <h2 style="color:#333;margin:0 0 20px;">Reset Your Password</h2>
-                <p style="color:#666;line-height:1.6;margin:0 0 20px;">
+            <td style="background:white;padding:40px 30px;">
+                <!-- English Version -->
+                <h2 style="color:#333;margin:0 0 15px;font-size:20px;">🇬🇧 Reset Your Password</h2>
+                <p style="color:#666;line-height:1.6;margin:0 0 15px;">
                     Hi {name},<br><br>
                     We received a request to reset your password. Click the button below to create a new password:
                 </p>
-                <p style="text-align:center;margin:30px 0;">
+                <p style="text-align:center;margin:25px 0;">
                     <a href="{reset_url}" style="background:#0891b2;color:white;padding:14px 30px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:bold;">
                         Reset Password
                     </a>
                 </p>
-                <p style="color:#999;font-size:13px;margin:20px 0 0;">
+                <p style="color:#999;font-size:13px;margin:0 0 25px;">
                     This link expires in 1 hour. If you didn\'t request this, you can safely ignore this email.
                 </p>
+                
+                <!-- Divider -->
+                <hr style="border:none;border-top:1px solid #e5e5e5;margin:25px 0;">
+                
+                <!-- Bahasa Malaysia Version -->
+                <h2 style="color:#333;margin:0 0 15px;font-size:20px;">🇲🇾 Tetapkan Semula Kata Laluan</h2>
+                <p style="color:#666;line-height:1.6;margin:0 0 15px;">
+                    Hai {name},<br><br>
+                    Kami menerima permintaan untuk menetapkan semula kata laluan anda. Klik butang di bawah untuk membuat kata laluan baharu:
+                </p>
+                <p style="text-align:center;margin:25px 0;">
+                    <a href="{reset_url}" style="background:#0891b2;color:white;padding:14px 30px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:bold;">
+                        Tetapkan Semula Kata Laluan
+                    </a>
+                </p>
+                <p style="color:#999;font-size:13px;margin:0;">
+                    Pautan ini luput dalam 1 jam. Jika anda tidak membuat permintaan ini, anda boleh mengabaikan e-mel ini.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="background:#f9fafb;padding:15px;text-align:center;color:#999;font-size:11px;border-radius:0 0 8px 8px;">
+                <p style="margin:0 0 5px;">Button not working? Copy and paste this link: | Butang tidak berfungsi? Salin dan tampal pautan ini:</p>
+                <p style="margin:0;word-break:break-all;"><a href="{reset_url}" style="color:#0891b2;">{reset_url}</a></p>
             </td>
         </tr>
         <tr>
@@ -537,6 +587,7 @@ function getEmailTemplate($template, $variables = [])
     </table>
 </body>
 </html>',
+
 
         'welcome' => '
 <!DOCTYPE html>
