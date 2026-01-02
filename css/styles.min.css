@@ -1029,7 +1029,6 @@ ol {
     height: auto;
     display: block;
     object-fit: contain;
-    max-height: 70vh;
 }
 
 /* Church Hero Placeholder (when image fails to load) */
