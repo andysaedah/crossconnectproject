@@ -394,8 +394,8 @@ require_once 'includes/header.php';
 
             <!-- Share Links -->
             <?php
-            // Prepare share content
-            $shareUrl = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'crossconnect.my') . '/event/' . $event['slug'];
+            // Prepare share content - use absolute URL
+            $shareUrl = getBaseUrl(false) . eventUrl($event['slug']);
             $shareTitle = $event['name'];
             $shareDescription = strip_tags(substr($event['description'] ?? '', 0, 120));
             if (strlen($event['description'] ?? '') > 120) {
