@@ -123,90 +123,158 @@ try {
                         </svg>
                     </button>
                 </div>
-            </div>
-            <p class="form-hint">Upload the event poster, banner, or a promotional image</p>
-        </div>
-    </div>
-
-    <div class="form-section">
-        <h3>Venue Information</h3>
-
-        <div class="form-group">
-            <label class="form-label">Venue Name</label>
-            <input type="text" name="venue" class="form-input" placeholder="e.g., KLCC Convention Centre">
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label class="form-label">State</label>
-                <select name="state_id" class="form-select">
-                    <option value="">Select State</option>
-                    <?php foreach ($states as $state): ?>
-                        <option value="<?php echo $state['id']; ?>"><?php echo htmlspecialchars($state['name']); ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">City</label>
-                <input type="text" name="city" class="form-input" placeholder="e.g., Kuala Lumpur">
+                <p class="form-hint">Upload the event poster, banner, or a promotional image</p>
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="form-label">Venue Address</label>
-            <textarea name="venue_address" class="form-textarea" rows="2"
-                placeholder="Full address of the venue"></textarea>
+        <!-- Event Format Section -->
+        <div class="form-section">
+            <h3>Event Format</h3>
+
+            <div class="form-group">
+                <div class="format-selector">
+                    <label class="format-option">
+                        <input type="radio" name="event_format" value="in_person" checked
+                            onchange="toggleEventFormat()">
+                        <div class="format-card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <span>In Person</span>
+                        </div>
+                    </label>
+                    <label class="format-option">
+                        <input type="radio" name="event_format" value="online" onchange="toggleEventFormat()">
+                        <div class="format-card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                            <span>Online</span>
+                        </div>
+                    </label>
+                    <label class="format-option">
+                        <input type="radio" name="event_format" value="hybrid" onchange="toggleEventFormat()">
+                        <div class="format-card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20"></path>
+                                <path
+                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                </path>
+                            </svg>
+                            <span>Hybrid</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="form-section">
-        <h3>Registration & Contact</h3>
+        <!-- Online Event Details (shown for online & hybrid) -->
+        <div class="form-section" id="onlineEventSection" style="display: none;">
+            <h3>Online Event Details</h3>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label class="form-label">Website</label>
-                <input type="url" name="website_url" class="form-input" placeholder="https://www.event-website.com">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Registration URL</label>
-                <input type="url" name="registration_url" class="form-input" placeholder="https://register.event.com">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Meeting Link</label>
+                    <input type="url" name="meeting_url" class="form-input" placeholder="e.g., https://zoom.us/j/...">
+                    <p class="form-hint">Zoom, Google Meet, Teams, or other meeting link</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Livestream URL</label>
+                    <input type="url" name="livestream_url" class="form-input"
+                        placeholder="e.g., https://youtube.com/live/...">
+                    <p class="form-hint">YouTube, Facebook Live, or other streaming link</p>
+                </div>
             </div>
         </div>
 
-        <div class="form-row">
+        <!-- Venue Information (hidden for online-only) -->
+        <div class="form-section" id="venueSection">
+            <h3>Venue Information</h3>
+
             <div class="form-group">
-                <label class="form-label">Contact Email</label>
-                <input type="email" name="email" class="form-input" placeholder="info@event.com">
+                <label class="form-label">Venue Name</label>
+                <input type="text" name="venue" class="form-input" placeholder="e.g., KLCC Convention Centre">
             </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">State</label>
+                    <select name="state_id" class="form-select">
+                        <option value="">Select State</option>
+                        <?php foreach ($states as $state): ?>
+                            <option value="<?php echo $state['id']; ?>"><?php echo htmlspecialchars($state['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">City</label>
+                    <input type="text" name="city" class="form-input" placeholder="e.g., Kuala Lumpur">
+                </div>
+            </div>
+
             <div class="form-group">
-                <label class="form-label">WhatsApp</label>
-                <input type="text" name="whatsapp" class="form-input" placeholder="60123456789">
+                <label class="form-label">Venue Address</label>
+                <textarea name="venue_address" class="form-textarea" rows="2"
+                    placeholder="Full address of the venue"></textarea>
             </div>
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label class="form-label">Price / Fee</label>
-                <input type="text" name="price" class="form-input" placeholder="e.g., RM50 per person or Free">
+        <div class="form-section">
+            <h3>Registration & Contact</h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Website</label>
+                    <input type="url" name="website_url" class="form-input" placeholder="https://www.event-website.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Registration URL</label>
+                    <input type="url" name="registration_url" class="form-input"
+                        placeholder="https://register.event.com">
+                </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Max Capacity</label>
-                <input type="number" name="capacity" class="form-input" placeholder="e.g., 500">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Contact Email</label>
+                    <input type="email" name="email" class="form-input" placeholder="info@event.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">WhatsApp</label>
+                    <input type="text" name="whatsapp" class="form-input" placeholder="60123456789">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Price / Fee</label>
+                    <input type="text" name="price" class="form-input" placeholder="e.g., RM50 per person or Free">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Max Capacity</label>
+                    <input type="number" name="capacity" class="form-input" placeholder="e.g., 500">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-actions">
-        <a href="<?php echo url('admin/events.php'); ?>" class="btn btn-secondary">Cancel</a>
-        <button type="submit" class="btn btn-primary" id="submitBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                <polyline points="7 3 7 8 15 8"></polyline>
-            </svg>
-            Save Event
-        </button>
-    </div>
+        <div class="form-actions">
+            <a href="<?php echo url('admin/events.php'); ?>" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                Save Event
+            </button>
+        </div>
 </form>
 
 <style>
@@ -360,6 +428,86 @@ try {
     .form-actions .btn {
         min-width: 120px;
     }
+
+    /* Event Format Selector */
+    .format-selector {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .format-option {
+        flex: 1;
+        min-width: 100px;
+        cursor: pointer;
+    }
+
+    .format-option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .format-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 12px;
+        border: 2px solid var(--color-border);
+        border-radius: 12px;
+        background: var(--color-bg);
+        transition: all 0.2s;
+        text-align: center;
+    }
+
+    .format-card svg {
+        width: 28px;
+        height: 28px;
+        color: var(--color-text-light);
+        transition: color 0.2s;
+    }
+
+    .format-card span {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-text);
+    }
+
+    .format-option:hover .format-card {
+        border-color: var(--color-primary);
+        background: var(--color-primary-bg, #f5f3ff);
+    }
+
+    .format-option input[type="radio"]:checked+.format-card {
+        border-color: var(--color-primary);
+        background: var(--color-primary-bg, #f5f3ff);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .format-option input[type="radio"]:checked+.format-card svg {
+        color: var(--color-primary);
+    }
+
+    .format-option input[type="radio"]:checked+.format-card span {
+        color: var(--color-primary);
+    }
+
+    @media (max-width: 480px) {
+        .format-selector {
+            flex-direction: column;
+        }
+
+        .format-option {
+            min-width: 100%;
+        }
+
+        .format-card {
+            flex-direction: row;
+            justify-content: center;
+            padding: 12px 16px;
+        }
+    }
 </style>
 
 <script>
@@ -382,6 +530,27 @@ try {
         document.getElementById('photoPreview').style.display = 'none';
         document.querySelector('.file-upload-area').style.display = 'block';
     }
+
+    // Toggle venue/online sections based on event format
+    function toggleEventFormat() {
+        const format = document.querySelector('input[name="event_format"]:checked').value;
+        const venueSection = document.getElementById('venueSection');
+        const onlineSection = document.getElementById('onlineEventSection');
+
+        if (format === 'in_person') {
+            venueSection.style.display = 'block';
+            onlineSection.style.display = 'none';
+        } else if (format === 'online') {
+            venueSection.style.display = 'none';
+            onlineSection.style.display = 'block';
+        } else { // hybrid
+            venueSection.style.display = 'block';
+            onlineSection.style.display = 'block';
+        }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', toggleEventFormat);
 
     // Form submission
     document.getElementById('eventForm').addEventListener('submit', async function (e) {
