@@ -794,7 +794,7 @@ try {
 <script>
     // Debug logging (fallback if outputJsConfig not called)
     if (typeof debugLog === 'undefined') {
-        window.debugLog = function(...args) {
+        window.debugLog = function (...args) {
             if (window.AppConfig && window.AppConfig.debug) {
                 console.log(...args);
             }
@@ -1190,6 +1190,9 @@ try {
             });
 
             const responseText = await response.text();
+            console.log('=== DELETE CHURCH RESPONSE ===');
+            console.log('Status:', response.status);
+            console.log('Response:', responseText);
             debugLog('Raw response:', responseText);
             debugLog('Response status:', response.status);
 
@@ -1197,6 +1200,7 @@ try {
             try {
                 data = JSON.parse(responseText);
             } catch (parseError) {
+                console.error('JSON parse error:', parseError, 'Response:', responseText);
                 debugLog('JSON parse error:', parseError);
                 debugLog('Response was:', responseText);
                 showToast('Server error: ' + responseText.substring(0, 100), 'error');
@@ -1207,10 +1211,12 @@ try {
                 showToast('Church deleted successfully', 'success');
                 loadData();
             } else {
+                console.error('API error:', data.error);
                 debugLog('API returned error:', data.error);
                 showToast(data.error || 'Failed to delete church', 'error');
             }
         } catch (error) {
+            console.error('Delete fetch error:', error);
             debugLog('Delete error:', error);
             showToast('Failed to delete church', 'error');
         }
