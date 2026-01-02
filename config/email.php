@@ -632,8 +632,9 @@ function getEmailTemplate($template, $variables = [])
         }
     }
 
-    // Remove any unreplaced action button if no action_url provided
-    if (!isset($variables['action_url']) || empty($variables['action_url'])) {
+    // Remove any unreplaced action button if no action_url provided (only for admin_notification template)
+    // Note: verification and password_reset templates use verify_url/reset_url, not action_url
+    if ($template === 'admin_notification' && (!isset($variables['action_url']) || empty($variables['action_url']))) {
         $html = preg_replace('/<p style="text-align:center;margin:30px 0;">.*?<\/p>/s', '', $html);
     }
 
