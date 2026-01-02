@@ -684,6 +684,12 @@ Wednesday: 7:30 PM (Prayer Meeting)',
     'error_loading_event' => 'Failed to load event data',
     'error_delete_church' => 'Failed to delete church',
     'error_delete_event' => 'Failed to delete event',
+    'error_enter_key_name' => 'Please enter a key name',
+    'error_key_exists' => 'This key already exists',
+    'error_enter_bot_token_chat_id' => 'Please enter both Bot Token and Chat ID',
+    'key_added_save_reminder' => 'Key added. Click "Save All Changes" to save.',
+    'key_deleted_save_reminder' => 'Key marked for deletion. Click "Save All Changes" to apply.',
+    'success_translations_saved' => 'Translations saved successfully!',
 
     // Terms
     'terms_acceptance' => 'Acceptance of Terms',

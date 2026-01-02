@@ -936,7 +936,7 @@ $emailSettings = getSettingsByGroup('email');
                 showToast(data.error || 'Failed to save settings', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         } finally {
             btn.disabled = false;
             btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Save Settings';
@@ -982,7 +982,7 @@ $emailSettings = getSettingsByGroup('email');
                 showToast(data.error || 'Failed to send test email', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         } finally {
             btn.disabled = false;
             btn.textContent = 'Send Test';
@@ -1018,7 +1018,7 @@ $emailSettings = getSettingsByGroup('email');
                 showToast(data.error || 'Failed to save settings', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         } finally {
             btn.disabled = false;
             btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1034,7 +1034,7 @@ $emailSettings = getSettingsByGroup('email');
         const chatId = document.getElementById('telegram_chat_id').value.trim();
 
         if (!botToken || !chatId) {
-            showToast('Please enter both Bot Token and Chat ID', 'error');
+            showToast('<?php _e('error_enter_bot_token_chat_id'); ?>', 'error');
             return;
         }
 
@@ -1062,7 +1062,7 @@ $emailSettings = getSettingsByGroup('email');
                 showToast(data.error || 'Failed to send test message', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         } finally {
             btn.disabled = false;
             btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

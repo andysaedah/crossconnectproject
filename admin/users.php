@@ -353,7 +353,7 @@ requireAdmin();
                 showToast(data.error || 'Action failed', 'error');
             }
         } catch (error) {
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         }
     }
 </script>

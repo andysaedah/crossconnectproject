@@ -684,6 +684,12 @@ Rabu: 7:30 malam (Persekutuan Doa)',
     'error_loading_event' => 'Gagal memuatkan data acara',
     'error_delete_church' => 'Gagal memadam gereja',
     'error_delete_event' => 'Gagal memadam acara',
+    'error_enter_key_name' => 'Sila masukkan nama kunci',
+    'error_key_exists' => 'Kunci ini sudah wujud',
+    'error_enter_bot_token_chat_id' => 'Sila masukkan kedua-dua Token Bot dan ID Chat',
+    'key_added_save_reminder' => 'Kunci ditambah. Klik "Simpan Semua Perubahan" untuk menyimpan.',
+    'key_deleted_save_reminder' => 'Kunci ditanda untuk dipadam. Klik "Simpan Semua Perubahan" untuk melaksanakan.',
+    'success_translations_saved' => 'Terjemahan berjaya disimpan!',
 
     // Terms
     'terms_acceptance' => 'Penerimaan Terma',

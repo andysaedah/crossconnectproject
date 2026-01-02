@@ -489,7 +489,7 @@ try {
             }
 
             if (data.success) {
-                showToast('Church added successfully!', 'success');
+                showToast('<?php _e('success_church_added'); ?>', 'success');
                 setTimeout(() => {
                     window.location.href = basePath + 'admin/churches.php';
                 }, 1000);
@@ -501,7 +501,7 @@ try {
             }
         } catch (error) {
             debugLog('Fetch error:', error);
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
             btn.disabled = false;
             btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Save Church';
         }

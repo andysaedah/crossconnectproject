@@ -397,13 +397,13 @@ ksort($grouped);
         const bm = document.getElementById('newBm').value.trim();
 
         if (!key) {
-            showToast('Please enter a key name', 'error');
+            showToast('<?php _e('error_enter_key_name'); ?>', 'error');
             return;
         }
 
         // Check if key exists
         if (document.querySelector(`[data-key="${key}"]`)) {
-            showToast('This key already exists', 'error');
+            showToast('<?php _e('error_key_exists'); ?>', 'error');
             return;
         }
 
@@ -454,7 +454,7 @@ ksort($grouped);
         document.getElementById('newEn').value = '';
         document.getElementById('newBm').value = '';
 
-        showToast('Key added. Click "Save All Changes" to save.', 'success');
+        showToast('<?php _e('key_added_save_reminder'); ?>', 'success');
     }
 
     function deleteKey(key) {
@@ -471,7 +471,7 @@ ksort($grouped);
         changedKeys.add('__delete__' + key);
         hasChanges = true;
 
-        showToast('Key marked for deletion. Click "Save All Changes" to apply.', 'success');
+        showToast('<?php _e('key_deleted_save_reminder'); ?>', 'success');
     }
 
     async function saveAllChanges() {
@@ -515,7 +515,7 @@ ksort($grouped);
             const data = await response.json();
 
             if (data.success) {
-                showToast('Translations saved successfully!', 'success');
+                showToast('<?php _e('success_translations_saved'); ?>', 'success');
 
                 // Clear changed states
                 document.querySelectorAll('.lang-input.changed').forEach(el => {
@@ -531,7 +531,7 @@ ksort($grouped);
             }
         } catch (error) {
             console.error('Save error:', error);
-            showToast('An error occurred', 'error');
+            showToast('<?php _e('dash_error_occurred'); ?>', 'error');
         }
     }
 
