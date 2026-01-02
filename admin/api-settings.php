@@ -244,19 +244,95 @@ $emailSettings = getSettingsByGroup('email');
         </form>
     </div>
 
-    <!-- Future API Integrations Placeholder -->
-    <div class="settings-card add-new">
-        <div class="add-new-content">
-            <div class="add-new-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="16"></line>
-                    <line x1="8" y1="12" x2="16" y2="12"></line>
+    <!-- Telegram Bot Configuration -->
+    <div class="settings-card telegram-settings">
+        <div class="settings-card-header">
+            <div class="settings-card-icon telegram">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                 </svg>
             </div>
-            <h3>More Integrations Coming Soon</h3>
-            <p>Additional API integrations will be available in future updates</p>
+            <div class="settings-card-title">
+                <h3>Telegram Bot</h3>
+                <p>Receive instant notifications via Telegram</p>
+            </div>
         </div>
+        <form id="telegramSettingsForm" class="settings-form">
+            <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+            <input type="hidden" name="group" value="telegram">
+
+            <!-- Enable Telegram Notifications -->
+            <div class="form-group">
+                <label class="form-label">
+                    <input type="hidden" name="settings[telegram_enabled]" value="0">
+                    <input type="checkbox" name="settings[telegram_enabled]" id="telegram_enabled" value="1"
+                        <?php echo (getSettingsByGroup('telegram')['telegram_enabled'] ?? '0') === '1' ? 'checked' : ''; ?>
+                        style="width: 18px; height: 18px; margin-right: 8px; vertical-align: middle;">
+                    Enable Telegram Notifications
+                </label>
+                <p class="form-hint">Send admin notifications to Telegram alongside email</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Bot Token <span class="required">*</span></label>
+                <div class="api-key-input">
+                    <input type="password" name="settings[telegram_bot_token]" id="telegram_bot_token" class="form-input"
+                        value="<?php echo htmlspecialchars(getSettingsByGroup('telegram')['telegram_bot_token'] ?? ''); ?>"
+                        placeholder="Enter your Telegram Bot Token">
+                    <button type="button" class="btn-icon" onclick="toggleApiKey('telegram_bot_token')"
+                        title="Show/Hide">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+                <p class="form-hint">Get your bot token from <a href="https://t.me/BotFather" target="_blank">@BotFather</a> on Telegram</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Chat ID <span class="required">*</span></label>
+                <input type="text" name="settings[telegram_chat_id]" id="telegram_chat_id" class="form-input"
+                    value="<?php echo htmlspecialchars(getSettingsByGroup('telegram')['telegram_chat_id'] ?? ''); ?>"
+                    placeholder="Enter your Telegram Chat ID">
+                <p class="form-hint">Your personal or group chat ID. Use <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a> to find yours</p>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box" style="background: #e0f2fe; border-color: #7dd3fc; margin-bottom: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #0369a1;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <div>
+                    <strong style="color: #0c4a6e;">How to set up:</strong>
+                    <ol style="margin: 8px 0 0 0; padding-left: 18px; font-size: 0.85rem; color: #0369a1;">
+                        <li>Message <a href="https://t.me/BotFather" target="_blank">@BotFather</a> → /newbot → get your token</li>
+                        <li>Message <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a> → get your Chat ID</li>
+                        <li>Start a chat with your bot (required for it to message you)</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="settings-card-footer">
+                <button type="button" class="btn btn-secondary" onclick="testTelegram()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 2L11 13"></path>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    Send Test Message
+                </button>
+                <button type="submit" class="btn btn-primary" id="saveTelegramBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Save Settings
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -344,6 +420,10 @@ $emailSettings = getSettingsByGroup('email');
 
     .settings-card-icon.email {
         background: linear-gradient(135deg, #0891b2, #0e7490);
+    }
+
+    .settings-card-icon.telegram {
+        background: linear-gradient(135deg, #0088cc, #0077b5);
     }
 
     .settings-card-icon svg {
@@ -913,6 +993,84 @@ $emailSettings = getSettingsByGroup('email');
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeTestEmailModal();
     });
+
+    // Telegram Settings Form
+    document.getElementById('telegramSettingsForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const btn = document.getElementById('saveTelegramBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Saving...';
+
+        try {
+            const formData = new FormData(this);
+            
+            const response = await fetch(basePath + 'api/admin/settings.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showToast(data.message || 'Telegram settings saved!', 'success');
+            } else {
+                showToast(data.error || 'Failed to save settings', 'error');
+            }
+        } catch (error) {
+            showToast('An error occurred', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+            </svg> Save Settings`;
+        }
+    });
+
+    async function testTelegram() {
+        const botToken = document.getElementById('telegram_bot_token').value.trim();
+        const chatId = document.getElementById('telegram_chat_id').value.trim();
+
+        if (!botToken || !chatId) {
+            showToast('Please enter both Bot Token and Chat ID', 'error');
+            return;
+        }
+
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Sending...';
+
+        try {
+            const formData = new FormData();
+            formData.append('csrf_token', document.querySelector('#telegramSettingsForm input[name="csrf_token"]').value);
+            formData.append('action', 'test_telegram');
+            formData.append('bot_token', botToken);
+            formData.append('chat_id', chatId);
+
+            const response = await fetch(basePath + 'api/admin/settings.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showToast(data.message || 'Test message sent!', 'success');
+            } else {
+                showToast(data.error || 'Failed to send test message', 'error');
+            }
+        } catch (error) {
+            showToast('An error occurred', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13"></path>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg> Send Test Message`;
+        }
+    }
 </script>
 
 <?php require_once __DIR__ . '/../includes/dashboard-footer.php'; ?>

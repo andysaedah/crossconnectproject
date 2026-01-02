@@ -137,6 +137,46 @@ try {
             }
             break;
 
+        case 'test_telegram':
+            $botToken = isset($_POST['bot_token']) ? trim($_POST['bot_token']) : '';
+            $chatId = isset($_POST['chat_id']) ? trim($_POST['chat_id']) : '';
+
+            if (empty($botToken) || empty($chatId)) {
+                echo json_encode(['success' => false, 'error' => 'Bot Token and Chat ID are required']);
+                exit;
+            }
+
+            // Send test message via Telegram Bot API
+            $message = "🔔 *CrossConnect MY Test*\n\nThis is a test notification from your CrossConnect MY admin panel.\n\n✅ Telegram integration is working!\n\n_Sent at: " . date('Y-m-d H:i:s') . "_";
+
+            $telegramUrl = "https://api.telegram.org/bot{$botToken}/sendMessage";
+            $postData = [
+                'chat_id' => $chatId,
+                'text' => $message,
+                'parse_mode' => 'Markdown'
+            ];
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $telegramUrl);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            $telegramResult = json_decode($response, true);
+
+            if ($httpCode === 200 && isset($telegramResult['ok']) && $telegramResult['ok']) {
+                echo json_encode(['success' => true, 'message' => 'Test message sent to Telegram!']);
+            } else {
+                $errorMsg = $telegramResult['description'] ?? 'Failed to send message';
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+            }
+            break;
+
         default:
             echo json_encode(['success' => false, 'error' => __('error_invalid_action')]);
             break;

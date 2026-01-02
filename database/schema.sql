@@ -254,7 +254,10 @@ INSERT INTO settings (setting_key, setting_value, setting_group, is_encrypted) V
     ('brevo_sender_email', 'noreply@crossconnect.my', 'email', FALSE),
     ('brevo_sender_name', 'CrossConnect MY', 'email', FALSE),
     ('clean_urls', '0', 'general', FALSE),
-    ('force_https', '1', 'general', FALSE)
+    ('force_https', '1', 'general', FALSE),
+    ('telegram_enabled', '0', 'telegram', FALSE),
+    ('telegram_bot_token', '', 'telegram', TRUE),
+    ('telegram_chat_id', '', 'telegram', FALSE)
 ON DUPLICATE KEY UPDATE setting_key = setting_key;
 
 -- =====================================================
