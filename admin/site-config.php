@@ -293,6 +293,12 @@ $forceHttps = getSetting('force_https', '1');
         btn.innerHTML = '<span class="spinner"></span> <?php echo addslashes(__("saving")); ?>';
 
         const formData = new FormData(this);
+        
+        // Debug: Log what we're sending
+        console.log('Sending form data:');
+        for (let [key, value] of formData.entries()) {
+            console.log(key + ': ' + value);
+        }
 
         try {
             const response = await fetch('<?php echo url("api/admin/settings.php"); ?>', {
@@ -300,7 +306,19 @@ $forceHttps = getSetting('force_https', '1');
                 body: formData
             });
 
-            const data = await response.json();
+            // Debug: Log raw response
+            const responseText = await response.text();
+            console.log('Raw API response:', responseText);
+            
+            let data;
+            try {
+                data = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('JSON parse error:', parseError);
+                console.error('Response was:', responseText);
+                showToast('Server error: ' + responseText.substring(0, 100), 'error');
+                return;
+            }
 
             if (data.success) {
                 showToast('<?php echo addslashes(__("success_settings_saved")); ?>', 'success');

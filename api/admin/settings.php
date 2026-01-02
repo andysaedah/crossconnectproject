@@ -4,6 +4,7 @@
  * Handles saving and retrieving settings
  */
 
+require_once __DIR__ . '/../../config/paths.php';
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../config/auth.php';
 require_once __DIR__ . '/../../config/settings.php';
@@ -56,7 +57,12 @@ try {
                 // Determine if this is an encrypted field (API keys)
                 $isEncrypted = strpos($key, 'api_key') !== false;
 
-                setSetting($key, trim($value), $group, $isEncrypted);
+                $result = setSetting($key, trim($value), $group, $isEncrypted);
+                if (!$result) {
+                    // Return detailed error for debugging
+                    echo json_encode(['success' => false, 'error' => 'Failed to save setting: ' . $key . '. Check if settings table exists.']);
+                    exit;
+                }
             }
 
             echo json_encode(['success' => true, 'message' => __('success_settings_saved')]);
