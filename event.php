@@ -54,7 +54,7 @@ if (!$event) {
 // Page meta
 $pageTitle = $event['name'];
 $pageDescription = strip_tags(substr($event['description'] ?? '', 0, 160));
-$ogImage = $event['poster_url'] ?: '/images/og-default.jpg';
+$ogImage = $event['poster_url'] ?: '/images/og-default.png';
 
 // Format dates
 $eventDate = new DateTime($event['event_date']);
