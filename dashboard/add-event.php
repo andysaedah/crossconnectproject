@@ -514,6 +514,15 @@ try {
 </style>
 
 <script>
+    // Debug logging (fallback if outputJsConfig not called)
+    if (typeof debugLog === 'undefined') {
+        window.debugLog = function (...args) {
+            if (window.AppConfig && window.AppConfig.debug) {
+                console.log(...args);
+            }
+        };
+    }
+
     const translations = {
         eventAdded: <?php echo json_encode(__('event_added_success')); ?>,
         addFailed: <?php echo json_encode(__('event_save_failed')); ?>,
