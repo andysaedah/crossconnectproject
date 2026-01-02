@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../config/paths.php';
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../config/auth.php';
 require_once __DIR__ . '/../../config/email.php';
+require_once __DIR__ . '/../../config/telegram.php';
 
 header('Content-Type: application/json');
 
@@ -148,6 +149,13 @@ try {
 
     // Log registration
     logActivity('register', 'New user registered', 'user', $userId);
+
+    // Send Telegram notification
+    sendTelegramNotification(
+        "New User Registration",
+        "👤 *{$name}*\n📧 {$email}\n🏷️ @{$username}" . ($churchName ? "\n⛪ {$churchName}" : ""),
+        "success"
+    );
 
     // Send verification email
     $emailResult = sendVerificationEmail($email, $name, $verificationToken);

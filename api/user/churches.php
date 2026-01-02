@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../config/paths.php';
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../config/auth.php';
 require_once __DIR__ . '/../../config/upload.php';
+require_once __DIR__ . '/../../config/telegram.php';
 
 header('Content-Type: application/json');
 
@@ -317,6 +318,13 @@ try {
         }
 
         logActivity('church_created', 'Created church: ' . $name, 'church', $newId);
+
+        // Send Telegram notification
+        sendTelegramNotification(
+            "⛪ New Church Added",
+            "*{$name}*\n📍 {$city}, {$stateName}" . ($user['name'] ? "\n👤 By: {$user['name']}" : ""),
+            "success"
+        );
 
         jsonSuccess(['id' => $newId], __('success_church_added'));
     }

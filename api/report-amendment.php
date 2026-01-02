@@ -17,6 +17,7 @@ session_start();
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../config/language.php';
 require_once __DIR__ . '/../config/email.php';
+require_once __DIR__ . '/../config/telegram.php';
 
 header('Content-Type: application/json');
 
@@ -235,6 +236,14 @@ try {
         // Log email failure but don't fail the request
         error_log("Failed to send admin notification for amendment: " . ($emailResult['error'] ?? 'Unknown error'));
     }
+
+    // Send Telegram notification
+    sendTelegramNotification(
+        "📝 Amendment Request",
+        "⛪ *{$church['name']}*\n\n📋 " . substr($notes, 0, 200) . (strlen($notes) > 200 ? "..." : "") .
+        ($reporterEmail ? "\n\n📧 Reply to: {$reporterEmail}" : ""),
+        "info"
+    );
 
     echo json_encode([
         'success' => true,

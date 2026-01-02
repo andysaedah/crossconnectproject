@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../config/paths.php';
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../config/auth.php';
 require_once __DIR__ . '/../../config/upload.php';
+require_once __DIR__ . '/../../config/telegram.php';
 
 header('Content-Type: application/json');
 
@@ -243,6 +244,13 @@ try {
         }
 
         logActivity('event_created', 'Created event: ' . $name, 'event', $newId);
+
+        // Send Telegram notification
+        sendTelegramNotification(
+            "📅 New Event Added",
+            "*{$name}*\n📍 {$venue}\n🗓️ {$startDate}" . ($user['name'] ? "\n👤 By: {$user['name']}" : ""),
+            "success"
+        );
 
         jsonSuccess(['id' => $newId], __('success_event_added'));
     }

@@ -16,6 +16,7 @@ session_start();
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../config/email.php';
 require_once __DIR__ . '/../config/settings.php';
+require_once __DIR__ . '/../config/telegram.php';
 
 header('Content-Type: application/json');
 
@@ -204,6 +205,14 @@ try {
     $result = sendAdminNotification("Bug Report: $subject", $html, $textBody, $replyTo);
 
     if ($result['success']) {
+        // Send Telegram notification
+        sendTelegramNotification(
+            "🐛 Bug Report Received",
+            "*Subject:* {$subject}\n\n📝 " . substr($message, 0, 200) . (strlen($message) > 200 ? "..." : "") .
+            ($reporterEmail ? "\n\n📧 Reply to: {$reporterEmail}" : ""),
+            "warning"
+        );
+
         echo json_encode(['success' => true, 'message' => 'Report submitted successfully']);
     } else {
         // Log error but show success to user (report was received)
