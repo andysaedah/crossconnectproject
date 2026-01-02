@@ -6,26 +6,27 @@
 
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../config/auth.php';
+require_once __DIR__ . '/../../config/language.php';
 
 header('Content-Type: application/json');
 
 // Require admin
 if (!isAdmin()) {
     http_response_code(403);
-    echo json_encode(['success' => false, 'error' => 'Unauthorized']);
+    echo json_encode(['success' => false, 'error' => __('error_unauthorized')]);
     exit;
 }
 
 // Only accept POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['success' => false, 'error' => 'Method not allowed']);
+    echo json_encode(['success' => false, 'error' => __('error_method_not_allowed')]);
     exit;
 }
 
 // Verify CSRF
 if (!verifyCsrfToken($_POST['csrf_token'] ?? '')) {
-    echo json_encode(['success' => false, 'error' => 'Invalid security token']);
+    echo json_encode(['success' => false, 'error' => __('error_invalid_security_token')]);
     exit;
 }
 
@@ -33,7 +34,7 @@ $action = $_POST['action'] ?? '';
 $id = intval($_POST['id'] ?? 0);
 
 if ($id <= 0) {
-    echo json_encode(['success' => false, 'error' => 'Invalid event ID']);
+    echo json_encode(['success' => false, 'error' => __('error_event_id_required')]);
     exit;
 }
 
@@ -48,9 +49,9 @@ try {
 
             if ($result && $stmt->rowCount() > 0) {
                 logActivity('event_deleted', 'Deleted event ID: ' . $id, 'event', $id);
-                echo json_encode(['success' => true, 'message' => 'Event deleted successfully']);
+                echo json_encode(['success' => true, 'message' => __('success_event_deleted')]);
             } else {
-                echo json_encode(['success' => false, 'error' => 'Event not found or already deleted']);
+                echo json_encode(['success' => false, 'error' => __('error_event_not_found')]);
             }
             break;
 
@@ -59,7 +60,7 @@ try {
             $validStatuses = ['upcoming', 'ongoing', 'completed', 'cancelled'];
 
             if (!in_array($status, $validStatuses)) {
-                echo json_encode(['success' => false, 'error' => 'Invalid status']);
+                echo json_encode(['success' => false, 'error' => __('error_invalid_status')]);
                 exit;
             }
 
@@ -68,17 +69,17 @@ try {
 
             if ($result) {
                 logActivity('event_status_updated', "Updated event ID: {$id} to status: {$status}", 'event', $id);
-                echo json_encode(['success' => true, 'message' => 'Status updated successfully']);
+                echo json_encode(['success' => true, 'message' => __('success_status_updated')]);
             } else {
-                echo json_encode(['success' => false, 'error' => 'Failed to update status']);
+                echo json_encode(['success' => false, 'error' => __('error_status_update_failed')]);
             }
             break;
 
         default:
-            echo json_encode(['success' => false, 'error' => 'Invalid action']);
+            echo json_encode(['success' => false, 'error' => __('error_invalid_action')]);
             break;
     }
 } catch (PDOException $e) {
     error_log("Admin events API error: " . $e->getMessage());
-    echo json_encode(['success' => false, 'error' => 'Database error']);
+    echo json_encode(['success' => false, 'error' => __('error_generic')]);
 }

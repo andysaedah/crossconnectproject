@@ -287,6 +287,8 @@ return [
     'error_invalid_security_token' => 'Token keselamatan tidak sah. Sila muat semula dan cuba lagi.',
     'error_invalid_settings' => 'Format tetapan tidak sah',
     'error_invalid_status' => 'Status tidak sah',
+    'error_status_update_failed' => 'Gagal mengemas kini status',
+    'error_invalid_action' => 'Tindakan tidak sah',
     'error_message_too_long' => 'Mesej terlalu panjang (maksimum 5000 aksara)',
     'error_method_not_allowed' => 'Kaedah tidak dibenarkan',
     'error_name_required' => 'Nama diperlukan',

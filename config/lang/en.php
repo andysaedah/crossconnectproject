@@ -287,6 +287,8 @@ return [
     'error_invalid_security_token' => 'Invalid security token. Please refresh and try again.',
     'error_invalid_settings' => 'Invalid settings format',
     'error_invalid_status' => 'Invalid status',
+    'error_status_update_failed' => 'Failed to update status',
+    'error_invalid_action' => 'Invalid action',
     'error_message_too_long' => 'Message is too long (max 5000 characters)',
     'error_method_not_allowed' => 'Method not allowed',
     'error_name_required' => 'Name is required',
