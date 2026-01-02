@@ -21,7 +21,7 @@ $pageTitle = __('login_title') !== 'login_title' ? __('login_title') : 'Login';
 $activeTab = isset($_GET['tab']) && $_GET['tab'] === 'register' ? 'register' : 'login';
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo getCurrentLanguage() === 'bm' ? 'ms' : 'en'; ?>">
+<html lang="<?php echo getCurrentLanguage() === 'bm' ? 'ms' : 'en'; ?>" translate="no" class="notranslate">
 
 <head>
     <meta charset="UTF-8">
