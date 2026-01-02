@@ -14,6 +14,8 @@ $message = '';
 
 if (!empty($token)) {
     try {
+        $pdo = getDbConnection();
+
         // Find user with this verification token
         $stmt = $pdo->prepare("
             SELECT id, email, name, email_verified_at 
