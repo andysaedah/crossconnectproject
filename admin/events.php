@@ -550,6 +550,15 @@ try {
 </style>
 
 <script>
+    // Debug logging (fallback if outputJsConfig not called)
+    if (typeof debugLog === 'undefined') {
+        window.debugLog = function (...args) {
+            if (window.AppConfig && window.AppConfig.debug) {
+                console.log(...args);
+            }
+        };
+    }
+
     let currentPage = 1;
     let searchTimeout = null;
     let showPast = '0'; // '0' = active/upcoming, '1' = past

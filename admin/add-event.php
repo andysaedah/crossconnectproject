@@ -511,6 +511,15 @@ try {
 </style>
 
 <script>
+    // Debug logging (fallback if outputJsConfig not called)
+    if (typeof debugLog === 'undefined') {
+        window.debugLog = function (...args) {
+            if (window.AppConfig && window.AppConfig.debug) {
+                console.log(...args);
+            }
+        };
+    }
+
     // Photo upload preview
     document.getElementById('photoInput').addEventListener('change', function (e) {
         const file = e.target.files[0];
