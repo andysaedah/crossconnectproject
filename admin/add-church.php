@@ -469,6 +469,9 @@ try {
 
             // DEBUG: Log raw response
             const responseText = await response.text();
+            console.log('=== ADD CHURCH RESPONSE ===');
+            console.log('Status:', response.status);
+            console.log('Response:', responseText);
             debugLog('Raw API response:', responseText);
             debugLog('Response status:', response.status);
 
@@ -476,6 +479,7 @@ try {
             try {
                 data = JSON.parse(responseText);
             } catch (parseError) {
+                console.error('JSON parse error:', parseError, 'Response:', responseText);
                 debugLog('JSON parse error:', parseError);
                 debugLog('Response was:', responseText);
                 showToast('Server error: ' + responseText.substring(0, 100), 'error');
