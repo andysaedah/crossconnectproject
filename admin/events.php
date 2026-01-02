@@ -855,27 +855,47 @@ try {
     }
 
     async function deleteEvent(id, name) {
+        console.log('=== DELETE EVENT DEBUG ===');
+        console.log('Event ID:', id);
+        console.log('Event Name:', name);
+
         if (!confirm(`Are you sure you want to permanently delete "${name}"?\n\nThis action cannot be undone.`)) {
+            console.log('User cancelled delete');
             return;
         }
 
         try {
             const formData = new FormData();
-            formData.append('csrf_token', csrfToken);
+            formData.append('csrf_token', '<?php echo generateCsrfToken(); ?>');
             formData.append('id', id);
             formData.append('action', 'delete');
+
+            console.log('Sending to:', basePath + 'api/admin/events.php');
 
             const response = await fetch(basePath + 'api/admin/events.php', {
                 method: 'POST',
                 body: formData
             });
 
-            const data = await response.json();
+            const responseText = await response.text();
+            console.log('Raw response:', responseText);
+            console.log('Response status:', response.status);
+
+            let data;
+            try {
+                data = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('JSON parse error:', parseError);
+                console.error('Response was:', responseText);
+                showToast('Server error: ' + responseText.substring(0, 100), 'error');
+                return;
+            }
 
             if (data.success) {
                 showToast('Event deleted successfully', 'success');
-                loadEvents();
+                loadData();
             } else {
+                console.log('API returned error:', data.error);
                 showToast(data.error || 'Failed to delete event', 'error');
             }
         } catch (error) {
