@@ -319,10 +319,19 @@ try {
 
         logActivity('church_created', 'Created church: ' . $name, 'church', $newId);
 
+        // Get state name for notification
+        $stateName = '';
+        if ($stateId) {
+            $stateStmt = $pdo->prepare("SELECT name FROM states WHERE id = ?");
+            $stateStmt->execute([$stateId]);
+            $stateResult = $stateStmt->fetch();
+            $stateName = $stateResult ? $stateResult['name'] : '';
+        }
+
         // Send Telegram notification
         sendTelegramNotification(
             "⛪ New Church Added",
-            "*{$name}*\n📍 {$city}, {$stateName}" . ($user['name'] ? "\n👤 By: {$user['name']}" : ""),
+            "*{$name}*\n📍 {$city}" . ($stateName ? ", {$stateName}" : "") . ($user['name'] ? "\n👤 By: {$user['name']}" : ""),
             "success"
         );
 
