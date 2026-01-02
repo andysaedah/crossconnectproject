@@ -46,7 +46,7 @@ function sendTelegramMessage($message, $customChatId = null)
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 3); // Short timeout to not block user actions
 
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
