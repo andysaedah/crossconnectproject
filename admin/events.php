@@ -676,6 +676,14 @@ try {
                                     </svg>
                                 </button>
                             `}
+                            <button class="action-btn delete" onclick="deleteEvent(${event.id}, '${event.name.replace(/'/g, "\\'")}')" title="Delete Permanently" style="color: #dc2626;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -729,7 +737,7 @@ try {
         const format = document.querySelector('input[name="event_format"]:checked').value;
         const venueSection = document.getElementById('venueFieldsSection');
         const onlineSection = document.getElementById('onlineFieldsSection');
-        
+
         if (format === 'in_person') {
             venueSection.style.display = 'block';
             onlineSection.style.display = 'none';
@@ -829,7 +837,7 @@ try {
                 document.getElementById('eventType').value = event.event_type || '';
                 document.getElementById('eventMeetingUrl').value = event.meeting_url || '';
                 document.getElementById('eventLivestreamUrl').value = event.livestream_url || '';
-                
+
                 // Set event format
                 const format = event.event_format || 'in_person';
                 document.querySelector(`input[name="event_format"][value="${format}"]`).checked = true;
@@ -843,6 +851,36 @@ try {
         } catch (error) {
             console.error('Edit error:', error);
             showToast('Failed to load event data', 'error');
+        }
+    }
+
+    async function deleteEvent(id, name) {
+        if (!confirm(`Are you sure you want to permanently delete "${name}"?\n\nThis action cannot be undone.`)) {
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('csrf_token', csrfToken);
+            formData.append('id', id);
+            formData.append('action', 'delete');
+
+            const response = await fetch(basePath + 'api/admin/events.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showToast('Event deleted successfully', 'success');
+                loadEvents();
+            } else {
+                showToast(data.error || 'Failed to delete event', 'error');
+            }
+        } catch (error) {
+            console.error('Delete error:', error);
+            showToast('Failed to delete event', 'error');
         }
     }
 
