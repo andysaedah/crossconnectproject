@@ -157,28 +157,54 @@ ol {
 .header-container {
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-sm);
+    min-width: 0;
+    /* Allow flex items to shrink below content size */
+}
+
+/* Larger padding and gap on tablet+ */
+@media (min-width: 768px) {
+    .header-container {
+        padding: var(--spacing-md) var(--spacing-lg);
+        gap: var(--spacing-lg);
+    }
 }
 
 /* Logo */
 .logo {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    font-size: var(--font-size-xl);
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-lg);
     font-weight: 700;
     color: var(--color-text);
     white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Larger logo on tablet+ */
+@media (min-width: 768px) {
+    .logo {
+        gap: var(--spacing-sm);
+        font-size: var(--font-size-xl);
+    }
 }
 
 .logo-icon {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     color: var(--color-primary);
+}
+
+@media (min-width: 768px) {
+    .logo-icon {
+        width: 28px;
+        height: 28px;
+    }
 }
 
 .logo-accent {
@@ -262,6 +288,7 @@ ol {
     flex-direction: column;
     gap: 5px;
     padding: var(--spacing-sm);
+    flex-shrink: 0;
 }
 
 .hamburger-line {
