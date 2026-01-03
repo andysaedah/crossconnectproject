@@ -25,8 +25,8 @@ function getBasePath()
     if ($basePath === null) {
         $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
 
-        // Check if installed in a subdirectory with 'hebats' in the name
-        if (preg_match('#^(/[^/]*hebats[^/]*)/#i', $scriptName, $matches)) {
+        // Check if installed in a subdirectory with 'hebats' or 'crossconnect' in the name
+        if (preg_match('#^(/[^/]*(hebats|crossconnect)[^/]*)/#i', $scriptName, $matches)) {
             $basePath = $matches[1] . '/';
         } else {
             // For root installations, always use '/'
