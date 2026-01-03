@@ -67,7 +67,7 @@ if (!$church) {
 // Page meta
 $pageTitle = $church['name'];
 $pageDescription = $church['description'] ?: "Find contact information, location, and service times for {$church['name']} in {$church['city']}, {$church['state_name']}, Malaysia.";
-$ogImage = $church['image_url'] ?: '/images/og-default.png';
+$ogImage = $church['image_url'] ?? null;
 
 // Structured data for SEO (LocalBusiness schema)
 $structuredData = [
@@ -400,16 +400,16 @@ require_once 'includes/header.php';
                     <?php endif; ?>
 
                     <?php /* Twitter hidden for now
-         <?php if (!empty($church['twitter'])): ?>
-             <a href="https://twitter.com/<?php echo htmlspecialchars($church['twitter']); ?>" target="_blank"
-                 rel="noopener" class="social-link-large" title="Twitter">
-                 <svg viewBox="0 0 24 24" fill="currentColor">
-                     <path
-                         d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
-                 </svg>
-             </a>
-         <?php endif; ?>
-         */ ?>
+        <?php if (!empty($church['twitter'])): ?>
+            <a href="https://twitter.com/<?php echo htmlspecialchars($church['twitter']); ?>" target="_blank"
+                rel="noopener" class="social-link-large" title="Twitter">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                </svg>
+            </a>
+        <?php endif; ?>
+        */ ?>
                 </div>
             </div>
         <?php endif; ?>

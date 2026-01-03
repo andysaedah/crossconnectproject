@@ -138,6 +138,29 @@ function asset($path)
 }
 
 /**
+ * Generate absolute URL for Open Graph images (social sharing)
+ * Always returns absolute URL for Facebook, Twitter, WhatsApp compatibility
+ * 
+ * @param string|null $imageUrl The image URL (can be relative or absolute)
+ * @return string Absolute URL for the OG image
+ */
+function ogImage($imageUrl = null)
+{
+    // If provided and already an absolute URL, return as-is
+    if ($imageUrl && filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+        return $imageUrl;
+    }
+
+    // If provided but relative, make it absolute
+    if ($imageUrl) {
+        return getBaseUrl() . '/' . ltrim($imageUrl, '/');
+    }
+
+    // Default fallback
+    return getBaseUrl() . '/images/og-default.png';
+}
+
+/**
  * Generate API endpoint URL
  * 
  * @param string $endpoint API endpoint (e.g., 'events.php')

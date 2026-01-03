@@ -73,8 +73,7 @@ $currentLang = getCurrentLanguage();
     <meta property="og:locale" content="<?php echo $currentLang === 'bm' ? 'ms_MY' : 'en_US'; ?>">
     <meta property="og:locale:alternate" content="<?php echo $currentLang === 'bm' ? 'en_US' : 'ms_MY'; ?>">
     <meta property="og:site_name" content="CrossConnect MY">
-    <meta property="og:image"
-        content="<?php echo isset($ogImage) ? htmlspecialchars($ogImage) : asset('images/og-default.png'); ?>">
+    <meta property="og:image" content="<?php echo htmlspecialchars(ogImage($ogImage ?? null)); ?>">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -82,8 +81,7 @@ $currentLang = getCurrentLanguage();
         content="<?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) . ' | ' : ''; ?>CrossConnect MY">
     <meta name="twitter:description"
         content="<?php echo isset($pageDescription) ? htmlspecialchars($pageDescription) : __('site_tagline'); ?>">
-    <meta name="twitter:image"
-        content="<?php echo isset($ogImage) ? htmlspecialchars($ogImage) : asset('images/og-default.png'); ?>">
+    <meta name="twitter:image" content="<?php echo htmlspecialchars(ogImage($ogImage ?? null)); ?>">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="<?php echo asset('images/favicon.svg'); ?>">
@@ -114,8 +112,8 @@ $currentLang = getCurrentLanguage();
     <!-- Structured Data -->
     <?php if (isset($structuredData)): ?>
         <script type="application/ld+json">
-                                                                                                                        <?php echo json_encode($structuredData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>
-                                                                                                                        </script>
+                                                                                                                            <?php echo json_encode($structuredData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>
+                                                                                                                            </script>
     <?php endif; ?>
 </head>
 
